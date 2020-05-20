@@ -9,7 +9,10 @@ import com.bumptech.glide.Glide
 import com.example.projemanag.R
 import com.example.projemanag.models.User
 import com.example.projemanag.utils.Constants
-import kotlinx.android.synthetic.main.item_member.view.*
+import kotlinx.android.synthetic.main.item_member.view.iv_member_image
+import kotlinx.android.synthetic.main.item_member.view.iv_selected_member
+import kotlinx.android.synthetic.main.item_member.view.tv_member_email
+import kotlinx.android.synthetic.main.item_member.view.tv_member_name
 
 open class MemberListItemsAdapter(
     private val context: Context,
@@ -30,25 +33,20 @@ open class MemberListItemsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
-
         if (holder is MyViewHolder) {
-
             Glide
                 .with(context)
                 .load(model.image)
                 .centerCrop()
                 .placeholder(R.drawable.ic_user_place_holder)
                 .into(holder.itemView.iv_member_image)
-
             holder.itemView.tv_member_name.text = model.name
             holder.itemView.tv_member_email.text = model.email
-
             if (model.selected) {
                 holder.itemView.iv_selected_member.visibility = View.VISIBLE
             } else {
                 holder.itemView.iv_selected_member.visibility = View.GONE
             }
-
             holder.itemView.setOnClickListener {
                 if (onClickListener != null) {
                     if (model.selected) {

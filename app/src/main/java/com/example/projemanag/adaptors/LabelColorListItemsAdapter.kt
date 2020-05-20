@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projemanag.R
-import kotlinx.android.synthetic.main.item_label_color.view.*
+import kotlinx.android.synthetic.main.item_label_color.view.iv_selected_color
+import kotlinx.android.synthetic.main.item_label_color.view.view_main
 
 class LabelColorListItemsAdapter(
     private val context: Context,
@@ -29,16 +30,13 @@ class LabelColorListItemsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = list[position]
-
         if (holder is MyViewHolder) {
             holder.itemView.view_main.setBackgroundColor(Color.parseColor(item))
-
             if (item == mSelectedColor) {
                 holder.itemView.iv_selected_color.visibility = View.VISIBLE
             } else {
                 holder.itemView.iv_selected_color.visibility = View.GONE
             }
-
             holder.itemView.setOnClickListener {
                 if (onItemClickListener != null) {
                     onItemClickListener!!.onClick(position, item)

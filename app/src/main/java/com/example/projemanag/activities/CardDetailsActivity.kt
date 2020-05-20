@@ -15,11 +15,23 @@ import com.example.projemanag.adaptors.CardMemberListItemsAdapter
 import com.example.projemanag.dialogs.LabelColorListDialog
 import com.example.projemanag.dialogs.MembersListDialog
 import com.example.projemanag.firebase.FirestoreClass
-import com.example.projemanag.models.*
+import com.example.projemanag.models.Board
+import com.example.projemanag.models.Card
+import com.example.projemanag.models.SelectedMembers
+import com.example.projemanag.models.Task
+import com.example.projemanag.models.User
 import com.example.projemanag.utils.Constants
-import kotlinx.android.synthetic.main.activity_card_details.*
+import kotlinx.android.synthetic.main.activity_card_details.btn_update_card_details
+import kotlinx.android.synthetic.main.activity_card_details.et_name_card_details
+import kotlinx.android.synthetic.main.activity_card_details.rv_selected_members_list
+import kotlinx.android.synthetic.main.activity_card_details.toolbar_card_details_activity
+import kotlinx.android.synthetic.main.activity_card_details.tv_select_due_date
+import kotlinx.android.synthetic.main.activity_card_details.tv_select_label_color
+import kotlinx.android.synthetic.main.activity_card_details.tv_select_members
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
+import java.util.Date
 import kotlin.collections.ArrayList
 
 class CardDetailsActivity : BaseActivity() {
@@ -36,7 +48,6 @@ class CardDetailsActivity : BaseActivity() {
         setContentView(R.layout.activity_card_details)
         getIntentData()
         setupActionBar()
-
         et_name_card_details.setText(
             mBoardDetails
                 .taskList[mTaskListPosition]
@@ -44,7 +55,6 @@ class CardDetailsActivity : BaseActivity() {
                 .name
         )
         et_name_card_details.setSelection(et_name_card_details.text.toString().length)
-
         mSelectedColor = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].labelColor
         if (mSelectedColor.isNotEmpty()) {
             setColor()
@@ -71,7 +81,6 @@ class CardDetailsActivity : BaseActivity() {
         }
 
         setupSelectedMembersList()
-
         mSelectedDueDateMilliSeconds = mBoardDetails
             .taskList[mTaskListPosition]
             .cards[mCardPosition]
@@ -157,10 +166,8 @@ class CardDetailsActivity : BaseActivity() {
     }
 
     private fun membersListDialog() {
-
         val cardAssignedMembersList =
             mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo
-
         if (cardAssignedMembersList.size > 0) {
             for (i in mMembersDetailList.indices) {
                 for (j in cardAssignedMembersList) {
@@ -214,7 +221,6 @@ class CardDetailsActivity : BaseActivity() {
         )
         val taskList: ArrayList<Task> = mBoardDetails.taskList
         taskList.removeAt(taskList.size - 1)
-
         mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition] = card
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
@@ -230,7 +236,6 @@ class CardDetailsActivity : BaseActivity() {
             )
         )
         builder.setIcon(android.R.drawable.ic_dialog_alert)
-
         builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, which ->
             dialogInterface.dismiss()
             deleteCard()
@@ -245,22 +250,16 @@ class CardDetailsActivity : BaseActivity() {
 
     private fun deleteCard() {
         val cardsList: ArrayList<Card> = mBoardDetails.taskList[mTaskListPosition].cards
-
         cardsList.removeAt(mCardPosition)
-
         val taskList: ArrayList<Task> = mBoardDetails.taskList
         taskList.removeAt(taskList.size - 1)
-
         taskList[mTaskListPosition].cards = cardsList
-
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 
     private fun labelColorsListDialog() {
-
         val colorsList: ArrayList<String> = colorsList()
-
         val listDialog = object : LabelColorListDialog(
             this,
             colorsList,
@@ -276,12 +275,9 @@ class CardDetailsActivity : BaseActivity() {
     }
 
     private fun setupSelectedMembersList() {
-
         val cardAssignedMembersList =
             mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo
-
         val selectedMembersList: ArrayList<SelectedMembers> = ArrayList()
-
         for (i in mMembersDetailList.indices) {
             for (j in cardAssignedMembersList) {
                 if (mMembersDetailList[i].id == j) {
@@ -295,12 +291,9 @@ class CardDetailsActivity : BaseActivity() {
         }
 
         if (selectedMembersList.size > 0) {
-
             selectedMembersList.add(SelectedMembers("", ""))
-
             tv_select_members.visibility = View.GONE
             rv_selected_members_list.visibility = View.VISIBLE
-
             rv_selected_members_list.layoutManager = GridLayoutManager(this, 6)
             val adapter = CardMemberListItemsAdapter(
                 this,
@@ -326,7 +319,6 @@ class CardDetailsActivity : BaseActivity() {
             c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-
         val dpd = DatePickerDialog(
             this,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->

@@ -16,8 +16,11 @@ import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.Board
 import com.example.projemanag.models.User
 import com.example.projemanag.utils.Constants
-import kotlinx.android.synthetic.main.activity_members.*
-import kotlinx.android.synthetic.main.dialog_search_member.*
+import kotlinx.android.synthetic.main.activity_members.rv_members_list
+import kotlinx.android.synthetic.main.activity_members.toolbar_members_activity
+import kotlinx.android.synthetic.main.dialog_search_member.et_email_search_member
+import kotlinx.android.synthetic.main.dialog_search_member.tv_add
+import kotlinx.android.synthetic.main.dialog_search_member.tv_cancel
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -40,27 +43,21 @@ class MembersActivity : BaseActivity() {
         if (intent.hasExtra(Constants.BOARD_DETAIL)) {
             mBoardDetails = intent.getParcelableExtra(Constants.BOARD_DETAIL)!!
         }
-
         setupActionBar()
-
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getAssignedMembersListDetails(
             this,
             mBoardDetails.assignedTo
         )
-
     }
 
     private fun setupActionBar() {
-
         setSupportActionBar(toolbar_members_activity)
-
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
         }
-
         toolbar_members_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
@@ -80,13 +77,10 @@ class MembersActivity : BaseActivity() {
     }
 
     fun setupMembersList(list: ArrayList<User>) {
-
         mAssignedMembersList = list
         hideProgressDialog()
-
         rv_members_list.layoutManager = LinearLayoutManager(this)
         rv_members_list.setHasFixedSize(true)
-
         val adapter = MemberListItemsAdapter(this, list)
         rv_members_list.adapter = adapter
     }
@@ -94,10 +88,9 @@ class MembersActivity : BaseActivity() {
     private fun dialogSearchMember() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_search_member)
+
         dialog.tv_add.setOnClickListener {
-
             val email = dialog.et_email_search_member.text.toString()
-
             if (email.isNotEmpty()) {
                 dialog.dismiss()
                 showProgressDialog(resources.getString(R.string.please_wait))
@@ -139,7 +132,6 @@ class MembersActivity : BaseActivity() {
     @SuppressLint("StaticFieldLeak")
     private inner class SendNotificationToUserAsyncTask(val boardName: String, val token: String) :
         AsyncTask<Any, Void, String>() {
-
         override fun onPreExecute() {
             super.onPreExecute()
             showProgressDialog(resources.getString(R.string.please_wait))
@@ -163,7 +155,6 @@ class MembersActivity : BaseActivity() {
                     "${Constants.FCM_KEY}=${Constants.FCM_SERVER_KEY}"
                 )
                 connection.useCaches = false
-
                 val wr = DataOutputStream(connection.outputStream)
                 val jsonRequest = JSONObject()
                 val dataObject = JSONObject()
@@ -177,7 +168,6 @@ class MembersActivity : BaseActivity() {
                 wr.writeBytes(jsonRequest.toString())
                 wr.flush()
                 wr.close()
-
                 val httpResult: Int = connection.responseCode
 
                 if (httpResult == HttpURLConnection.HTTP_OK) {
@@ -214,9 +204,7 @@ class MembersActivity : BaseActivity() {
 
         override fun onPostExecute(result: String) {
             super.onPostExecute(result)
-
             hideProgressDialog()
-
             Log.e("JSON Response Result", result)
         }
     }

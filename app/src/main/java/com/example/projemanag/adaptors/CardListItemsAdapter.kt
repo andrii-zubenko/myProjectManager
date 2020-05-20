@@ -11,8 +11,9 @@ import com.example.projemanag.R
 import com.example.projemanag.activities.TaskListActivity
 import com.example.projemanag.models.Card
 import com.example.projemanag.models.SelectedMembers
-import kotlinx.android.synthetic.main.item_card.view.*
-
+import kotlinx.android.synthetic.main.item_card.view.rv_card_selected_members_list
+import kotlinx.android.synthetic.main.item_card.view.tv_card_name
+import kotlinx.android.synthetic.main.item_card.view.view_label_color
 
 open class CardListItemsAdapter(
     private val context: Context,
@@ -34,9 +35,7 @@ open class CardListItemsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
-
         if (holder is MyViewHolder) {
-
             if (model.labelColor.isNotEmpty()) {
                 holder.itemView.view_label_color.visibility = View.VISIBLE
                 holder.itemView.view_label_color
@@ -45,12 +44,10 @@ open class CardListItemsAdapter(
                 holder.itemView.view_label_color.visibility = View.GONE
             }
             holder.itemView.tv_card_name.text = model.name
-
             if ((context as TaskListActivity)
                     .mAssignedMembersDetailList.size > 0
             ) {
                 val selectedMembersList: ArrayList<SelectedMembers> = ArrayList()
-
                 for (i in context.mAssignedMembersDetailList.indices) {
                     for (j in model.assignedTo) {
                         if (context.mAssignedMembersDetailList[i].id == j) {
@@ -62,14 +59,13 @@ open class CardListItemsAdapter(
                         }
                     }
                 }
-
                 if (selectedMembersList.size > 0) {
                     if (selectedMembersList.size == 1 &&
-                        selectedMembersList[0].id == model.createdBy) {
+                        selectedMembersList[0].id == model.createdBy
+                    ) {
                         holder.itemView.rv_card_selected_members_list.visibility = View.GONE
                     } else {
                         holder.itemView.rv_card_selected_members_list.visibility = View.VISIBLE
-
                         holder.itemView.rv_card_selected_members_list.layoutManager =
                             GridLayoutManager(context, 4)
                         val adapter = CardMemberListItemsAdapter(
@@ -79,20 +75,18 @@ open class CardListItemsAdapter(
                         )
                         holder.itemView.rv_card_selected_members_list.adapter = adapter
                         adapter.setOnClickListener(
-                            object: CardMemberListItemsAdapter.OnClickListener{
-                            override fun onClick() {
-                                if(onClickListener != null) {
-                                    onClickListener!!.onClick(position)
+                            object : CardMemberListItemsAdapter.OnClickListener {
+                                override fun onClick() {
+                                    if (onClickListener != null) {
+                                        onClickListener!!.onClick(position)
+                                    }
                                 }
-                            }
-                        })
+                            })
                     }
                 } else {
                     holder.itemView.rv_card_selected_members_list.visibility = View.GONE
                 }
-
             }
-
             holder.itemView.setOnClickListener {
                 if (onClickListener != null) {
                     onClickListener!!.onClick(position)
@@ -100,7 +94,6 @@ open class CardListItemsAdapter(
             }
         }
     }
-
 
     override fun getItemCount(): Int {
         return list.size

@@ -7,7 +7,6 @@ import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 
 object Constants {
-
     const val USERS: String = "users"
     const val BOARDS: String = "boards"
     const val ASSIGNED_TO: String = "assignedTo"
@@ -29,17 +28,16 @@ object Constants {
     const val PROJEMANAG_PREFS: String = "ProjemanagPrefs"
     const val FCM_TOKEN_UPDATED: String = "fcmTokenUpdated"
     const val FCM_TOKEN: String = "fcmToken"
-
-    const val FCM_BASE_URL:String = "https://fcm.googleapis.com/fcm/send"
-    const val FCM_AUTHORIZATION:String = "authorization"
-    const val FCM_KEY:String = "key"
-    const val FCM_SERVER_KEY:String
-            = "AAAAKe9z3Tc:APA91bEe26RkxBh2_N02Ms16LGoOKOiZorvDKoJ6sW3Ui71y8LZfbrog4pNTBDEZg" +
-            "FMCI39xIi3KQpqxHBhegGn5Ppk_M3A73XL3-fl9itq-P-PVZHXcMd2Q6pCZrSPyl876Fn48AjDg"
-    const val FCM_KEY_TITLE:String = "title"
-    const val FCM_KEY_MESSAGE:String = "message"
-    const val FCM_KEY_DATA:String = "data"
-    const val FCM_KEY_TO:String = "to"
+    const val FCM_BASE_URL: String = "https://fcm.googleapis.com/fcm/send"
+    const val FCM_AUTHORIZATION: String = "authorization"
+    const val FCM_KEY: String = "key"
+    const val FCM_SERVER_KEY: String =
+        "AAAAKe9z3Tc:APA91bEe26RkxBh2_N02Ms16LGoOKOiZorvDKoJ6sW3Ui71y8LZfbrog4pNTBDEZg" +
+                "FMCI39xIi3KQpqxHBhegGn5Ppk_M3A73XL3-fl9itq-P-PVZHXcMd2Q6pCZrSPyl876Fn48AjDg"
+    const val FCM_KEY_TITLE: String = "title"
+    const val FCM_KEY_MESSAGE: String = "message"
+    const val FCM_KEY_DATA: String = "data"
+    const val FCM_KEY_TO: String = "to"
 
     fun showImageChooser(activity: Activity) {
         var galleryIntent = Intent(

@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projemanag.R
 import com.example.projemanag.adaptors.MemberListItemsAdapter
 import com.example.projemanag.models.User
-import kotlinx.android.synthetic.main.dialog_list.view.*
-
+import kotlinx.android.synthetic.main.dialog_list.view.rvList
+import kotlinx.android.synthetic.main.dialog_list.view.tvTitle
 
 abstract class MembersListDialog(
     context: Context,
@@ -22,9 +22,7 @@ abstract class MembersListDialog(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState ?: Bundle())
-
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_list, null)
-
         setContentView(view)
         setCanceledOnTouchOutside(true)
         setCancelable(true)
@@ -33,13 +31,10 @@ abstract class MembersListDialog(
 
     private fun setUpRecyclerView(view: View) {
         view.tvTitle.text = title
-
         if (list.size > 0) {
-
             view.rvList.layoutManager = LinearLayoutManager(context)
             adapter = MemberListItemsAdapter(context, list)
             view.rvList.adapter = adapter
-
             adapter!!.setOnClickListener(object :
                 MemberListItemsAdapter.OnClickListener {
                 override fun onClick(position: Int, user: User, action: String) {
