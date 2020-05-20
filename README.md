@@ -1,0 +1,1 @@
+# myProjectManager readme file
