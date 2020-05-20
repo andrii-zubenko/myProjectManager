@@ -17,7 +17,12 @@ import com.example.projemanag.models.User
 import com.example.projemanag.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_my_profile.*
+import kotlinx.android.synthetic.main.activity_my_profile.btn_update
+import kotlinx.android.synthetic.main.activity_my_profile.et_email
+import kotlinx.android.synthetic.main.activity_my_profile.et_mobile
+import kotlinx.android.synthetic.main.activity_my_profile.et_name
+import kotlinx.android.synthetic.main.activity_my_profile.iv_profile_user_image
+import kotlinx.android.synthetic.main.activity_my_profile.toolbar_my_profile_activity
 import java.io.IOException
 
 class MyProfileActivity : BaseActivity() {
@@ -29,13 +34,10 @@ class MyProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_profile)
-
         setupActionBar()
-
         FirestoreClass().loadUserData(this)
 
         iv_profile_user_image.setOnClickListener {
-
             if (ContextCompat.checkSelfPermission(
                     this, Manifest.permission.READ_EXTERNAL_STORAGE
                 )
@@ -69,8 +71,8 @@ class MyProfileActivity : BaseActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty()
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {
                 Constants.showImageChooser(this)
             } else {
@@ -86,15 +88,15 @@ class MyProfileActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK
-            && requestCode == Constants.PICK_IMAGE_REQUEST_CODE
-            && data!!.data != null
+        if (resultCode == Activity.RESULT_OK &&
+            requestCode == Constants.PICK_IMAGE_REQUEST_CODE &&
+            data!!.data != null
         ) {
             mSelectedImageFileUri = data.data
 
             try {
                 Glide
-                    .with(this@MyProfileActivity)
+                    .with(this)
                     .load(mSelectedImageFileUri)
                     .centerCrop()
                     .placeholder(R.drawable.ic_user_place_holder)
@@ -117,16 +119,13 @@ class MyProfileActivity : BaseActivity() {
     }
 
     fun setUserDataInUI(user: User) {
-
         mUserDetails = user
-
         Glide
-            .with(this@MyProfileActivity)
+            .with(this)
             .load(user.image)
             .centerCrop()
             .placeholder(R.drawable.ic_user_place_holder)
             .into(iv_profile_user_image)
-
         et_name.setText(user.name)
         et_email.setText(user.email)
         if (user.mobile != 0L) {
@@ -142,7 +141,6 @@ class MyProfileActivity : BaseActivity() {
 
     private fun updateUserProfileData() {
         val userHashMap: HashMap<String, Any> = HashMap()
-
         if (mProfileImageURL.isNotEmpty() && mProfileImageURL != mUserDetails.image) {
             userHashMap[Constants.IMAGE] = mProfileImageURL
         }
@@ -154,19 +152,16 @@ class MyProfileActivity : BaseActivity() {
         if (et_mobile.text.toString() != mUserDetails.mobile.toString()) {
             userHashMap[Constants.MOBILE] = et_mobile.text.toString().toLong()
         }
-
         FirestoreClass().updateUserProfileData(this, userHashMap)
     }
 
     private fun uploadUserImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
-
         if (mSelectedImageFileUri != null) {
-
             val sRef: StorageReference =
                 FirebaseStorage.getInstance().reference.child(
-                    "USER_IMAGE" + System.currentTimeMillis()
-                            + "." + Constants.getFileExtension(this, mSelectedImageFileUri)
+                    "USER_IMAGE" + System.currentTimeMillis() +
+                            "." + Constants.getFileExtension(this, mSelectedImageFileUri)
                 )
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
                 Log.i(
@@ -182,7 +177,7 @@ class MyProfileActivity : BaseActivity() {
                 }
             }.addOnFailureListener { exception ->
                 Toast.makeText(
-                    this@MyProfileActivity,
+                    this,
                     exception.message,
                     Toast.LENGTH_LONG
                 ).show()

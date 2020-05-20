@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.projemanag.R
 import com.example.projemanag.models.Board
-import kotlinx.android.synthetic.main.item_board.view.*
+import kotlinx.android.synthetic.main.item_board.view.iv_board_image
+import kotlinx.android.synthetic.main.item_board.view.tv_created_by
+import kotlinx.android.synthetic.main.item_board.view.tv_name
 
 open class BoardItemsAdapter(
     private val context: Context,
@@ -34,21 +36,16 @@ open class BoardItemsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
-
         if (holder is MyViewHolder) {
-
             Glide
                 .with(context)
                 .load(model.image)
                 .centerCrop()
                 .placeholder(R.drawable.ic_board_place_holder)
                 .into(holder.itemView.iv_board_image)
-
             holder.itemView.tv_name.text = model.name
             holder.itemView.tv_created_by.text = "Created By : ${model.createdBy}"
-
             holder.itemView.setOnClickListener {
-
                 if (onClickListener != null) {
                     onClickListener!!.onClick(position, model)
                 }
@@ -65,5 +62,4 @@ open class BoardItemsAdapter(
     }
 
     private class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
 }

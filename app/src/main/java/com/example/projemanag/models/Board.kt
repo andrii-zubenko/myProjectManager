@@ -18,8 +18,7 @@ data class Board(
         parcel.createStringArrayList()!!,
         parcel.readString()!!,
         parcel.createTypedArrayList(Task.CREATOR)!!
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) = with(parcel) {
         parcel.writeString(name)

@@ -9,19 +9,21 @@ import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_sign_up.btn_sign_up
+import kotlinx.android.synthetic.main.activity_sign_up.et_email
+import kotlinx.android.synthetic.main.activity_sign_up.et_name
+import kotlinx.android.synthetic.main.activity_sign_up.et_password
+import kotlinx.android.synthetic.main.activity_sign_up.toolbar_sign_up_activity
 
 class SignUpActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-
         setUpActionBar()
     }
 
@@ -37,15 +39,12 @@ class SignUpActivity : BaseActivity() {
 
     private fun setUpActionBar() {
         setSupportActionBar(toolbar_sign_up_activity)
-
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
         }
-
         toolbar_sign_up_activity.setNavigationOnClickListener { onBackPressed() }
-
         btn_sign_up.setOnClickListener {
             registerUser()
         }
@@ -55,7 +54,6 @@ class SignUpActivity : BaseActivity() {
         val name: String = et_name.text.toString().trim { it <= ' ' }
         val email: String = et_email.text.toString().trim { it <= ' ' }
         val password: String = et_password.text.toString().trim { it <= ' ' }
-
         if (validateForm(name, email, password)) {
             showProgressDialog(resources.getString(R.string.please_wait))
             FirebaseAuth.getInstance()

@@ -3,7 +3,14 @@ package com.example.projemanag.firebase
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
-import com.example.projemanag.activities.*
+import com.example.projemanag.activities.CardDetailsActivity
+import com.example.projemanag.activities.CreateBoardActivity
+import com.example.projemanag.activities.MainActivity
+import com.example.projemanag.activities.MembersActivity
+import com.example.projemanag.activities.MyProfileActivity
+import com.example.projemanag.activities.SignInActivity
+import com.example.projemanag.activities.SignUpActivity
+import com.example.projemanag.activities.TaskListActivity
 import com.example.projemanag.models.Board
 import com.example.projemanag.models.User
 import com.example.projemanag.utils.Constants
@@ -35,9 +42,7 @@ class FirestoreClass {
                 val board = document.toObject(Board::class.java)!!
                 board.documentID = document.id
                 activity.boardDetails(board)
-
             }.addOnFailureListener { exception ->
-
                 activity.hideProgressDialog()
                 Log.i(activity.javaClass.simpleName, "Error while creating a board.", exception)
             }
@@ -77,7 +82,6 @@ class FirestoreClass {
                     board.documentID = i.id
                     boardsList.add(board)
                 }
-
                 activity.populateBoardsListToUI(boardsList)
             }.addOnFailureListener { exception ->
                 activity.hideProgressDialog()
@@ -88,7 +92,6 @@ class FirestoreClass {
     fun addUpdateTaskList(activity: Activity, board: Board) {
         val taskListHashMap = HashMap<String, Any>()
         taskListHashMap[Constants.TASK_LIST] = board.taskList
-
         mFireStore.collection(Constants.BOARDS)
             .document(board.documentID)
             .update(taskListHashMap)
@@ -156,8 +159,6 @@ class FirestoreClass {
                         activity.setUserDataInUI(loggedInUser)
                     }
                 }
-
-
             }.addOnFailureListener { e ->
                 when (activity) {
                     is SignInActivity -> {
@@ -177,7 +178,6 @@ class FirestoreClass {
             .get()
             .addOnSuccessListener { document ->
                 Log.e(activity.javaClass.simpleName, document.documents.toString())
-
                 val usersList: ArrayList<User> = ArrayList()
 
                 for (i in document.documents) {
@@ -223,7 +223,6 @@ class FirestoreClass {
                     "Error while getting user details",
                     e
                 )
-
             }
     }
 
@@ -244,11 +243,8 @@ class FirestoreClass {
                     "Error while creating a bord.",
                     e
                 )
-
             }
-
     }
-
 
     fun getCurrentUserId(): String {
         var currentUser = FirebaseAuth.getInstance().currentUser

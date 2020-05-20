@@ -4,14 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import com.example.projemanag.R
-import kotlinx.android.synthetic.main.activity_intro.*
+import kotlinx.android.synthetic.main.activity_intro.btn_sign_in_intro
+import kotlinx.android.synthetic.main.activity_intro.btn_sign_up_intro
 
 class IntroActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
-
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -25,6 +25,4 @@ class IntroActivity : BaseActivity() {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
-
-
 }

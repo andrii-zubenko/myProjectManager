@@ -10,7 +10,10 @@ import com.example.projemanag.R
 import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.User
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlinx.android.synthetic.main.activity_sign_in.btn_sign_in
+import kotlinx.android.synthetic.main.activity_sign_in.et_email_sign_in
+import kotlinx.android.synthetic.main.activity_sign_in.et_password_sign_in
+import kotlinx.android.synthetic.main.activity_sign_in.toolbar_sign_in_activity
 
 class SignInActivity : BaseActivity() {
 
@@ -20,9 +23,7 @@ class SignInActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-
         auth = FirebaseAuth.getInstance()
-
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -43,31 +44,28 @@ class SignInActivity : BaseActivity() {
 
     private fun setUpActionBar() {
         setSupportActionBar(toolbar_sign_in_activity)
-
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
         }
-
         toolbar_sign_in_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
     private fun signInRegisteredUser() {
         val email: String = et_email_sign_in.text.toString().trim { it <= ' ' }
         val password: String = et_password_sign_in.text.toString().trim { it <= ' ' }
-
         if (validateForm(email, password)) {
             showProgressDialog(resources.getString(R.string.please_wait))
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        FirestoreClass().loadUserData(this@SignInActivity)
+                        FirestoreClass().loadUserData(this)
                         Log.d(TAG, "signInWithEmail:success")
                     } else {
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
                         Toast.makeText(
-                            this@SignInActivity,
+                            this,
                             "Authentication failed.",
                             Toast.LENGTH_SHORT
                         ).show()

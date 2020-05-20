@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.projemanag.R
 import com.example.projemanag.models.SelectedMembers
-import kotlinx.android.synthetic.main.item_card_selected_member.view.*
+import kotlinx.android.synthetic.main.item_card_selected_member.view.iv_add_member
+import kotlinx.android.synthetic.main.item_card_selected_member.view.iv_selected_member_image
 
 open class CardMemberListItemsAdapter(
     private val context: Context,
@@ -30,16 +31,13 @@ open class CardMemberListItemsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
-
         if (holder is MyViewHolder) {
-
             if (position == list.size - 1 && assignedMembers) {
                 holder.itemView.iv_add_member.visibility = View.VISIBLE
                 holder.itemView.iv_selected_member_image.visibility = View.GONE
             } else {
                 holder.itemView.iv_add_member.visibility = View.GONE
                 holder.itemView.iv_selected_member_image.visibility = View.VISIBLE
-
                 Glide
                     .with(context)
                     .load(model.image)
@@ -47,7 +45,6 @@ open class CardMemberListItemsAdapter(
                     .placeholder(R.drawable.ic_user_place_holder)
                     .into(holder.itemView.iv_selected_member_image)
             }
-
             holder.itemView.setOnClickListener {
                 if (onClickListener != null) {
                     onClickListener!!.onClick()
@@ -55,7 +52,6 @@ open class CardMemberListItemsAdapter(
             }
         }
     }
-
 
     override fun getItemCount(): Int {
         return list.size

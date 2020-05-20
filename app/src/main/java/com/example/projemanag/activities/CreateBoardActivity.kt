@@ -17,7 +17,10 @@ import com.example.projemanag.models.Board
 import com.example.projemanag.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_create_board.*
+import kotlinx.android.synthetic.main.activity_create_board.btn_create
+import kotlinx.android.synthetic.main.activity_create_board.et_board_name
+import kotlinx.android.synthetic.main.activity_create_board.iv_board_image
+import kotlinx.android.synthetic.main.activity_create_board.toolbar_create_board_activity
 import java.io.IOException
 
 class CreateBoardActivity : BaseActivity() {
@@ -30,7 +33,6 @@ class CreateBoardActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_board)
         setupActionBar()
-
         if (intent.hasExtra(Constants.NAME)) {
             mUserName = intent.getStringExtra(Constants.NAME)
         }
@@ -64,7 +66,6 @@ class CreateBoardActivity : BaseActivity() {
     private fun createBoard() {
         val assignedUsersArrayList: ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(getCurrentUserID())
-
         var board: Board = Board(
             et_board_name.text.toString(),
             mBoardImageURL,
@@ -76,22 +77,19 @@ class CreateBoardActivity : BaseActivity() {
 
     private fun uploadBoardImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
-
         val sRef: StorageReference =
             FirebaseStorage.getInstance().reference.child(
-                "BOARD_IMAGE" + System.currentTimeMillis()
-                        + "." + Constants.getFileExtension(this, mSelectedImageFileUri)
+                "BOARD_IMAGE" + System.currentTimeMillis() +
+                        "." + Constants.getFileExtension(this, mSelectedImageFileUri)
             )
         sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
             Log.i(
                 "Board Image URL",
                 taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
             )
-
             taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
                 Log.i("Downloadable Image URL", uri.toString())
                 mBoardImageURL = uri.toString()
-
                 createBoard()
             }
         }.addOnFailureListener { exception ->
@@ -100,7 +98,6 @@ class CreateBoardActivity : BaseActivity() {
                 exception.message,
                 Toast.LENGTH_LONG
             ).show()
-
             hideProgressDialog()
         }
     }
@@ -111,7 +108,6 @@ class CreateBoardActivity : BaseActivity() {
         finish()
     }
 
-
     private fun setupActionBar() {
         setSupportActionBar(toolbar_create_board_activity)
         val actionBar = supportActionBar
@@ -121,8 +117,6 @@ class CreateBoardActivity : BaseActivity() {
             actionBar.title = resources.getString(R.string.create_board_title)
         }
         toolbar_create_board_activity.setNavigationOnClickListener { onBackPressed() }
-
-
     }
 
     override fun onRequestPermissionsResult(
@@ -132,8 +126,8 @@ class CreateBoardActivity : BaseActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty()
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {
                 Constants.showImageChooser(this)
             } else {
@@ -149,9 +143,9 @@ class CreateBoardActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK
-            && requestCode == Constants.PICK_IMAGE_REQUEST_CODE
-            && data!!.data != null
+        if (resultCode == Activity.RESULT_OK &&
+            requestCode == Constants.PICK_IMAGE_REQUEST_CODE &&
+            data!!.data != null
         ) {
             mSelectedImageFileUri = data.data
 
