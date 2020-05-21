@@ -20,6 +20,7 @@ class SignInTest : BaseTest() {
     val activityRule = ActivityTestRule(SplashActivity::class.java)
     private val signInActivityTitle = "SIGN IN"
     private val emptyString = ""
+    private val pleaseEnterAnEmailAddress = "Please enter an email address"
 
     @Test
     fun verifySignInActivityTitle() {
@@ -43,7 +44,9 @@ class SignInTest : BaseTest() {
             typeInEmail(emptyString)
             typeInPassword(emptyString)
             clickSignInButton()
-            snackBarIsDisplayed()
+            snackbarIsDisplayed()
+            val actualSnackbarMessage = getSnackbarText()
+            Assert.assertEquals(pleaseEnterAnEmailAddress, actualSnackbarMessage)
         }
     }
 }

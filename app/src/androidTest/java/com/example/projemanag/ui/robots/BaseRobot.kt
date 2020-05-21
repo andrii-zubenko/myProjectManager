@@ -14,12 +14,13 @@ import org.hamcrest.Matcher
 
 open class BaseRobot {
     private val activityTitleMatcher: Matcher<View> = withId(R.id.tv_title)
-    private val snackBarTextMatcher: Matcher<View> = withId(R.id.snackbar_text)
+    private val snackbarTextMatcher: Matcher<View> = withId(R.id.snackbar_text)
 
     fun tapOn(matcher: Matcher<View>) = onView(matcher).perform(click())
     fun typeInText(matcher: Matcher<View>, text: String) = onView(matcher)
         .perform(replaceText(text), closeSoftKeyboard())
     fun getActivityTitleText(): String? = getTextWithMatcher(activityTitleMatcher)
-    fun snackBarIsDisplayed() =
-        onView(snackBarTextMatcher).check(matches(isDisplayed()))
+    fun snackbarIsDisplayed() =
+        onView(snackbarTextMatcher).check(matches(isDisplayed()))
+    fun getSnackbarText(): String? = getTextWithMatcher(snackbarTextMatcher)
 }
