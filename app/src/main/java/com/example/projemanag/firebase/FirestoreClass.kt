@@ -227,10 +227,8 @@ class FirestoreClass {
     }
 
     fun assignMemberToBoard(activity: MembersActivity, board: Board, user: User) {
-
         val assignedToHashMap = HashMap<String, Any>()
         assignedToHashMap[Constants.ASSIGNED_TO] = board.assignedTo
-
         mFireStore.collection(Constants.BOARDS)
             .document(board.documentID)
             .update(assignedToHashMap)

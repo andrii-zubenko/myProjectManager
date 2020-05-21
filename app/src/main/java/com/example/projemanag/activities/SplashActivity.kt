@@ -26,12 +26,11 @@ class SplashActivity : BaseActivity() {
             var currentUserID = FirestoreClass().getCurrentUserId()
             if (currentUserID.isNotEmpty()) {
                 startActivity(Intent(this, MainActivity::class.java))
-                Utils.countingIdlingResource.decrement()
             } else {
                 startActivity(Intent(this, IntroActivity::class.java))
-                Utils.countingIdlingResource.decrement()
             }
             finish()
+            Utils.countingIdlingResource.decrement()
         }, 2500)
     }
 }

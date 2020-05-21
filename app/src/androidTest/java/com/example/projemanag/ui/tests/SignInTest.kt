@@ -21,6 +21,8 @@ class SignInTest : BaseTest() {
     private val signInActivityTitle = "SIGN IN"
     private val emptyString = ""
     private val pleaseEnterAnEmailAddress = "Please enter an email address"
+    private val validEmail = "andrew@gmail.com"
+    private val validPassword = "password"
 
     @Test
     fun verifySignInActivityTitle() {
@@ -49,4 +51,18 @@ class SignInTest : BaseTest() {
             Assert.assertEquals(pleaseEnterAnEmailAddress, actualSnackbarMessage)
         }
     }
+
+    @Test
+    fun signInWithValidCreds() {
+        intro {
+            tapOnSignInButton()
+        }
+
+        signIn {
+            typeInEmail(validEmail)
+            typeInPassword(validPassword)
+            clickSignInButton()
+        }
+    }
+
 }
