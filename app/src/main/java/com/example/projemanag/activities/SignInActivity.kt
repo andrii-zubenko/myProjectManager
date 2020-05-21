@@ -63,6 +63,7 @@ class SignInActivity : BaseActivity() {
                         FirestoreClass().loadUserData(this)
                         Log.d(TAG, "signInWithEmail:success")
                     } else {
+                        hideProgressDialog()
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
                         Toast.makeText(
                             this,

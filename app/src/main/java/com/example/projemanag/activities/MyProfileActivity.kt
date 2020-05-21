@@ -93,7 +93,6 @@ class MyProfileActivity : BaseActivity() {
             data!!.data != null
         ) {
             mSelectedImageFileUri = data.data
-
             try {
                 Glide
                     .with(this)
@@ -172,7 +171,6 @@ class MyProfileActivity : BaseActivity() {
                 taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
                     Log.i("Downloadable Image URL", uri.toString())
                     mProfileImageURL = uri.toString()
-
                     updateUserProfileData()
                 }
             }.addOnFailureListener { exception ->
@@ -181,7 +179,6 @@ class MyProfileActivity : BaseActivity() {
                     exception.message,
                     Toast.LENGTH_LONG
                 ).show()
-
                 hideProgressDialog()
             }
         }
