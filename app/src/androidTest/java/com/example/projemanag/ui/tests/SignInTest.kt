@@ -64,5 +64,4 @@ class SignInTest : BaseTest() {
             clickSignInButton()
         }
     }
-
 }
