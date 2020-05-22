@@ -14,5 +14,5 @@ class SignInRobot : BaseRobot() {
 
     fun typeInEmail(email: String) = typeInText(emailFieldMatcher, email)
     fun typeInPassword(password: String) = typeInText(passwordFieldMatcher, password)
-    fun clickSignInButton() = tapOn(signInButtonMatcher)
+    fun tapOnSignInButton() = tapOn(signInButtonMatcher)
 }

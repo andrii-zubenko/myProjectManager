@@ -16,5 +16,5 @@ class SignUpRobot : BaseRobot() {
     fun typeInName(name: String) = typeInText(nameFieldMatcher, name)
     fun typeInEmail(email: String) = typeInText(emailFieldMatcher, email)
     fun typeInPassword(password: String) = typeInText(passwordFieldMatcher, password)
-    fun clickSignUpButton() = tapOn(signUpButtonMatcher)
+    fun tapOnSignUpButton() = tapOn(signUpButtonMatcher)
 }

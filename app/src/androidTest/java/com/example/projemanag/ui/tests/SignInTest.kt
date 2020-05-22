@@ -31,8 +31,7 @@ class SignInTest : BaseTest() {
         }
 
         signIn {
-            val actualActivityTitle = getActivityTitleText()
-            Assert.assertEquals(signInActivityTitle, actualActivityTitle)
+            Assert.assertEquals(signInActivityTitle, getActivityTitleText())
         }
     }
 
@@ -45,10 +44,9 @@ class SignInTest : BaseTest() {
         signIn {
             typeInEmail(emptyString)
             typeInPassword(emptyString)
-            clickSignInButton()
+            tapOnSignInButton()
             snackbarIsDisplayed()
-            val actualSnackbarMessage = getSnackbarText()
-            Assert.assertEquals(pleaseEnterAnEmailAddress, actualSnackbarMessage)
+            Assert.assertEquals(pleaseEnterAnEmailAddress, getSnackbarText())
         }
     }
 
@@ -61,11 +59,11 @@ class SignInTest : BaseTest() {
         signIn {
             typeInEmail(validEmail)
             typeInPassword(validPassword)
-            clickSignInButton()
+            tapOnSignInButton()
         }
 
         main {
-            isToolbarMainDisplayed()
+            isMainToolbarDisplayed()
         }
     }
 }

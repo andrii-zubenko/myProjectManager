@@ -8,8 +8,13 @@ import com.example.projemanag.R
 
 fun main(func: MainRobot.() -> Unit) = MainRobot().apply { func() }
 
-class MainRobot {
+class MainRobot : BaseRobot() {
     private val toolbarMatcher = withId(R.id.toolbar_main_activity)
+    private val fabCreateBoardMatcher = withId(R.id.fab_create_board)
 
-    fun isToolbarMainDisplayed() = onView(toolbarMatcher).check(matches(isDisplayed()))
+    fun isMainToolbarDisplayed() =
+        onView(toolbarMatcher).check(matches(isDisplayed()))
+
+    fun tapOnfabCreateBoard() = tapOn(fabCreateBoardMatcher)
+
 }

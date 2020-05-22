@@ -35,7 +35,7 @@ class SignUpTest : BaseTest() {
             typeInName(invalidName)
             typeInEmail(invalidEmail)
             typeInPassword(invalidPassword)
-            clickSignUpButton()
+            tapOnSignUpButton()
             toastWithTextIsDiplayed(toastRegFailed)
         }
     }
@@ -50,7 +50,7 @@ class SignUpTest : BaseTest() {
             typeInName(validName)
             typeInEmail(validEmail)
             typeInPassword(validPassword)
-            clickSignUpButton()
+            tapOnSignUpButton()
             toastWithTextIsDiplayed(toastRegSuccess)
         }
     }
