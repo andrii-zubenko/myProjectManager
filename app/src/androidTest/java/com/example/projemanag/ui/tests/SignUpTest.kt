@@ -23,7 +23,7 @@ class SignUpTest : BaseTest() {
     private val invalidPassword = "invalidPassword"
     private val validPassword = "validPassword"
     private val toastRegFailed = "Registration failed"
-    val toastSuccessReg = "You have successfully registered"
+    private val toastRegSuccess = "You have successfully registered"
 
     @Test
     fun signUpWithInvalidCreds() {
@@ -36,6 +36,7 @@ class SignUpTest : BaseTest() {
             typeInEmail(invalidEmail)
             typeInPassword(invalidPassword)
             clickSignUpButton()
+            toastWithTextIsDiplayed(toastRegFailed)
         }
     }
 
@@ -50,6 +51,7 @@ class SignUpTest : BaseTest() {
             typeInEmail(validEmail)
             typeInPassword(validPassword)
             clickSignUpButton()
+            toastWithTextIsDiplayed(toastRegSuccess)
         }
     }
 }
