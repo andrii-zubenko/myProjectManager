@@ -13,6 +13,7 @@ import com.example.projemanag.R
 import com.example.projemanag.ui.utils.ToastMatcher
 import com.example.projemanag.ui.utils.getTextWithMatcher
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers.allOf
 
 open class BaseRobot {
     private val activityTitleMatcher: Matcher<View> = withId(R.id.tv_title)
@@ -25,6 +26,8 @@ open class BaseRobot {
     fun snackbarIsDisplayed() =
         onView(snackbarTextMatcher).check(matches(isDisplayed()))
     fun getSnackbarText(): String? = getTextWithMatcher(snackbarTextMatcher)
+    fun snackbarWithTextIsDisplayed(text: String) =
+        onView(allOf(snackbarTextMatcher, withText(text))).check(matches(isDisplayed()))
     fun toastWithTextIsDiplayed(text: String) =
         onView(withText(text)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
 }

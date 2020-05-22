@@ -66,7 +66,7 @@ class CreateBoardActivity : BaseActivity() {
         val assignedUsersArrayList: ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(getCurrentUserID())
         val boardName: String = et_board_name.text.toString().trim { it <= ' ' }
-        if(boardName.isNotEmpty()) {
+        if (boardName.isNotEmpty()) {
             showProgressDialog(resources.getString(R.string.please_wait))
             val board: Board = Board(
                 et_board_name.text.toString(),

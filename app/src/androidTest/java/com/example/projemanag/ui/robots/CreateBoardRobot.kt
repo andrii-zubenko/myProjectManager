@@ -11,7 +11,6 @@ class CreateBoardRobot : BaseRobot() {
     private val boardNameFieldMatcher = withId(R.id.et_board_name)
     private val createButtonMatcher = withId(R.id.btn_create)
 
-    fun typeInBoardNameField(text: String) = typeInText(boardImageMatcher, text)
+    fun typeInBoardNameField(text: String) = typeInText(boardNameFieldMatcher, text)
     fun tapOnCreateButton() = tapOn(createButtonMatcher)
-
 }
