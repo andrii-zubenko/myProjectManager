@@ -34,7 +34,7 @@ class CreateBoardActivity : BaseActivity() {
         setContentView(R.layout.activity_create_board)
         setupActionBar()
         if (intent.hasExtra(Constants.NAME)) {
-            mUserName = intent.getStringExtra(Constants.NAME)
+            mUserName = intent.getStringExtra(Constants.NAME)!!
         }
 
         iv_board_image.setOnClickListener {

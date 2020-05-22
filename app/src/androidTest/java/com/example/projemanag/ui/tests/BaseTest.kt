@@ -9,10 +9,6 @@ open class BaseTest {
     @Before
     fun setup() {
         IdlingRegistry.getInstance().register(Utils.countingIdlingResource)
-//        var currentUser = FirebaseAuth.getInstance().currentUser
-//        if (currentUser != null) {
-//            FirebaseAuth.getInstance().signOut()
-//        }
     }
 
     @After

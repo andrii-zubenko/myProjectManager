@@ -5,6 +5,19 @@ apply plugin: 'com.google.gms.google-services'
 
 apply from: "../ktlint.gradle"
 
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.shazam.fork:fork-gradle-plugin:3.10.0'
+    }
+}
+
+apply plugin: 'com.shazam.fork'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -58,4 +71,20 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestUtil 'androidx.test:orchestrator:1.2.0'
+}
+
+fork {
+    title = "My acceptance tests"
+    testPackage = "com.example.projemanag.ui.tests"
+    totalAllowedRetryQuota = 0
+    retryPerTestCaseQuota = 1
+
+    poolingStrategy {
+        computed {
+            characteristic = "sw"
+            groups {
+                allDevices = 0
+            }
+        }
+    }
 }

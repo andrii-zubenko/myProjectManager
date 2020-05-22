@@ -29,7 +29,7 @@ class TaskListActivity : BaseActivity() {
         setContentView(R.layout.activity_task_list)
 
         if (intent.hasExtra(Constants.DOCUMENT_ID)) {
-            mBoardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)
+            mBoardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
         }
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getBoardDetails(this, mBoardDocumentId)
