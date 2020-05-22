@@ -76,8 +76,8 @@ dependencies {
 fork {
     title = "My acceptance tests"
     testPackage = "com.example.projemanag.ui.tests"
-    totalAllowedRetryQuota = 0
-    retryPerTestCaseQuota = 1
+    totalAllowedRetryQuota = 5
+    retryPerTestCaseQuota = 2
 
     poolingStrategy {
         computed {

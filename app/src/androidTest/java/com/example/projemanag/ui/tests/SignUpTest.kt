@@ -23,7 +23,7 @@ class SignUpTest : BaseTest() {
     private val invalidPassword = "invalidPassword"
     private val validPassword = "validPassword"
     private val toastRegFailed = "Registration failed"
-    private val toastRegSuccess = "You have successfully registered"
+    private val toastRegSuccess = "you have successfully registered"
 
     @Test
     fun signUpWithInvalidCreds() {

@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.example.projemanag.R
 import com.example.projemanag.firebase.FirestoreClass
+import com.example.projemanag.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.btn_sign_in
 import kotlinx.android.synthetic.main.activity_sign_in.et_email_sign_in
@@ -55,12 +56,14 @@ class SignInActivity : BaseActivity() {
         val email: String = et_email_sign_in.text.toString().trim { it <= ' ' }
         val password: String = et_password_sign_in.text.toString().trim { it <= ' ' }
         if (validateForm(email, password)) {
+            Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         FirestoreClass().loadUserData(this)
                         Log.d(TAG, "signInWithEmail:success")
+                        Utils.countingIdlingResource.decrement()
                     } else {
                         hideProgressDialog()
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -69,6 +72,7 @@ class SignInActivity : BaseActivity() {
                             "Authentication failed.",
                             Toast.LENGTH_SHORT
                         ).show()
+                        Utils.countingIdlingResource.decrement()
                     }
                 }
         }
