@@ -3,7 +3,6 @@ package com.example.projemanag.ui.tests
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-
 import com.example.projemanag.activities.SplashActivity
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.signIn
