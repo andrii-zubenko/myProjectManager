@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.example.projemanag.R
 import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.User
+import com.example.projemanag.utils.ToastManager
 import com.example.projemanag.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -69,7 +70,7 @@ class SignUpActivity : BaseActivity() {
                         Utils.countingIdlingResource.decrement()
                     } else {
                         hideProgressDialog()
-                        Toast.makeText(
+                        ToastManager().makeText(
                             this,
                             "Registration failed", Toast.LENGTH_LONG
                         ).show()
