@@ -22,9 +22,8 @@ class CreateBoardTest : BaseTest() {
     private val validEmail = "andrew@gmail.com"
     private val validPassword = "password"
     private val emptyBoardName = ""
-    private val newBoardName = "new board"
+    private val newBoardName = "newnewnew"
     private val pleaseEnterABoardNameMessage = "Please enter a Board name"
-    private val boardCreatedSuccessfullyMessage = "Board created successfully."
 
     @Test
     fun createBoardWithEmptyName() {
@@ -69,8 +68,10 @@ class CreateBoardTest : BaseTest() {
         createBoard {
             typeInBoardNameField(newBoardName)
             tapOnCreateButton()
-            toastWithTextIsDiplayed(boardCreatedSuccessfullyMessage)
-            // TODO finish assertion
+        }
+
+        main {
+            isBoardDisplayed(newBoardName)
         }
     }
 }

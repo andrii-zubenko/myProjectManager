@@ -15,5 +15,8 @@ class MainRobot : BaseRobot() {
 
     fun isMainToolbarDisplayed() =
         onView(toolbarMatcher).check(matches(isDisplayed()))
+
     fun tapOnfabCreateBoard() = tapOn(fabCreateBoardMatcher)
+    fun isBoardDisplayed(boardName: String) =
+        isRecyclerItemDisplayed(boardRecyclerViewMatcher, boardName)
 }
