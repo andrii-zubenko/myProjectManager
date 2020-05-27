@@ -8,6 +8,7 @@ import com.example.projemanag.ui.robots.createBoard
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.main
 import com.example.projemanag.ui.robots.signIn
+import com.example.projemanag.ui.utils.dateInMills
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +23,7 @@ class CreateBoardTest : BaseTest() {
     private val validEmail = "andrew@gmail.com"
     private val validPassword = "password"
     private val emptyBoardName = ""
-    private val newBoardName = "test1234556"
+    private val newBoardName = "${dateInMills()}_Board"
     private val pleaseEnterABoardNameMessage = "Please enter a Board name"
 
     @Test

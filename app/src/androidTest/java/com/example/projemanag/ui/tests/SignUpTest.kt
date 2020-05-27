@@ -6,6 +6,7 @@ import androidx.test.rule.ActivityTestRule
 import com.example.projemanag.activities.SplashActivity
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.signUp
+import com.example.projemanag.ui.utils.dateInMills
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,7 +20,7 @@ class SignUpTest : BaseTest() {
     private val invalidName = "invalidName"
     private val validName = "validName"
     private val invalidEmail = "invalidEmail"
-    private val validEmail = "validEmail@gmail.com"
+    private val validEmail = "${dateInMills()}@gmail.com"
     private val invalidPassword = "invalidPassword"
     private val validPassword = "validPassword"
     private val toastRegFailed = "Registration failed"
