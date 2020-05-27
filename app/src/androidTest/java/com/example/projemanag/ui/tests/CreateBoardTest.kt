@@ -20,23 +20,13 @@ class CreateBoardTest : BaseTest() {
 
     @get:Rule
     val activityRule = ActivityTestRule(SplashActivity::class.java)
-    private val validEmail = "andrew@gmail.com"
-    private val validPassword = "password"
     private val emptyBoardName = ""
     private val newBoardName = "${dateInMills()}_Board"
     private val pleaseEnterABoardNameMessage = "Please enter a Board name"
 
     @Test
     fun createBoardWithEmptyName() {
-        intro {
-            tapOnSignInButton()
-        }
-
-        signIn {
-            typeInEmail(validEmail)
-            typeInPassword(validPassword)
-            tapOnSignInButton()
-        }
+        signInWithTestCreds()
 
         main {
             tapOnfabCreateBoard()
@@ -52,15 +42,7 @@ class CreateBoardTest : BaseTest() {
 
     @Test
     fun createBoard() {
-        intro {
-            tapOnSignInButton()
-        }
-
-        signIn {
-            typeInEmail(validEmail)
-            typeInPassword(validPassword)
-            tapOnSignInButton()
-        }
+        signInWithTestCreds()
 
         main {
             tapOnfabCreateBoard()
