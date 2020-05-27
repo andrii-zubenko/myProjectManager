@@ -38,15 +38,6 @@ open class BaseRobot {
     fun toastWithTextIsDiplayed(text: String) =
         onView(withText(text)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
 
-    fun tapRecyclerItem(recyclerViewMatcher: Matcher<View>, name: String) {
-        onView(recyclerViewMatcher)
-            .perform(
-                actionOnItem<RecyclerView.ViewHolder>
-                    (hasDescendant(withText(name)), scrollTo())
-            )
-        onView(withText(name)).perform(click())
-    }
-
     fun isRecyclerItemDisplayed(recyclerViewMatcher: Matcher<View>, text: String) {
         onView(recyclerViewMatcher)
             .perform(

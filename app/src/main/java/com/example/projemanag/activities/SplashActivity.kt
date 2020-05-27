@@ -23,7 +23,9 @@ class SplashActivity : BaseActivity() {
         tv_app_name.typeface = typeFace
         Utils.countingIdlingResource.increment()
         Handler().postDelayed({
-            val currentUserID = FirestoreClass().getCurrentUserId()
+            // diasabled fot testing
+//            val currentUserID = FirestoreClass().getCurrentUserId()
+            val currentUserID = ""
             if (currentUserID.isNotEmpty()) {
                 startActivity(Intent(this, MainActivity::class.java))
             } else {

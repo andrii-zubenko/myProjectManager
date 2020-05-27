@@ -22,7 +22,7 @@ class CreateBoardTest : BaseTest() {
     private val validEmail = "andrew@gmail.com"
     private val validPassword = "password"
     private val emptyBoardName = ""
-    private val newBoardName = "newnewnew"
+    private val newBoardName = "test1234556"
     private val pleaseEnterABoardNameMessage = "Please enter a Board name"
 
     @Test
