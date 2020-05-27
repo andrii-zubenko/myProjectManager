@@ -1,14 +1,19 @@
 package com.example.projemanag.ui.robots
 
 import android.view.View
+import android.widget.HorizontalScrollView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
+import androidx.test.espresso.contrib.RecyclerViewActions.scrollTo
+import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -38,12 +43,20 @@ open class BaseRobot {
     fun toastWithTextIsDiplayed(text: String) =
         onView(withText(text)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
 
-    fun isRecyclerItemDisplayed(recyclerViewMatcher: Matcher<View>, text: String) {
+    fun tapRecyclerItem(recyclerViewMatcher: Matcher<View>, itemMatcher: Matcher<View>) {
+        onView(recyclerViewMatcher)
+            .perform(
+                actionOnItem<RecyclerView.ViewHolder>(hasDescendant(itemMatcher), scrollTo())
+            )
+        onView(itemMatcher).perform(click())
+    }
+
+    fun isRecyclerItemDisplayed(recyclerViewMatcher: Matcher<View>, itemMatcher: Matcher<View>) {
         onView(recyclerViewMatcher)
             .perform(
                 actionOnItem<RecyclerView.ViewHolder>
-                    (hasDescendant(withText(text)), scrollTo())
+                    (hasDescendant(itemMatcher), scrollTo())
             )
-        onView(withText(text)).perform(click())
+        onView(itemMatcher).check(matches(isDisplayed()))
     }
 }

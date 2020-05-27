@@ -5,9 +5,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.example.projemanag.activities.SplashActivity
 import com.example.projemanag.ui.robots.createBoard
-import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.main
-import com.example.projemanag.ui.robots.signIn
 import com.example.projemanag.ui.utils.dateInMills
 import org.junit.Assert
 import org.junit.Rule
@@ -16,7 +14,7 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class CreateBoardTest : BaseTest() {
+class BoardTest : BaseTest() {
 
     @get:Rule
     val activityRule = ActivityTestRule(SplashActivity::class.java)

@@ -4,6 +4,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.example.projemanag.R
 
 fun main(func: MainRobot.() -> Unit) = MainRobot().apply { func() }
@@ -18,5 +19,8 @@ class MainRobot : BaseRobot() {
 
     fun tapOnfabCreateBoard() = tapOn(fabCreateBoardMatcher)
     fun isBoardDisplayed(boardName: String) =
-        isRecyclerItemDisplayed(boardRecyclerViewMatcher, boardName)
+        isRecyclerItemDisplayed(boardRecyclerViewMatcher, withText(boardName))
+
+    fun tapOnBoard(boardName: String) =
+        tapRecyclerItem(boardRecyclerViewMatcher, withText(boardName))
 }
