@@ -1,13 +1,14 @@
 package com.example.projemanag.ui.robots
 
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.hasSibling
+import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.withChild
 import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.example.projemanag.R
+import com.example.projemanag.ui.utils.getColorWithMatcher
 import org.hamcrest.Matchers.allOf
 
 fun board(func: BoardRobot.() -> Unit) = BoardRobot().apply { func() }
@@ -48,6 +49,7 @@ class BoardRobot : BaseRobot() {
     private val listNameMatcher = withId(R.id.tv_task_list_title)
     private val cardsRecyclerViewMatcher = withId(R.id.rv_card_list)
     private val cardNameMatcher = withId(R.id.tv_card_name)
+    private val cardColorMatcher = withId(R.id.view_label_color)
 
     fun tapAddCard(listName: String) {
         val currentAddCardButtonMatcher = allOf(
@@ -72,17 +74,50 @@ class BoardRobot : BaseRobot() {
 
     fun typeInCardName(cardName: String) = typeInText(cardNameFieldMatcher, cardName)
     fun tapOnCardDoneButton() = tapOn(cardDoneButtonMatcher)
-    fun isCardDisplayed(cardName: String) {
-        val currentCardsRecyclerViewMatcher = allOf(
+    fun isCardDisplayed(listName: String, cardName: String) {
+        val currentCardsRecyclerView = allOf(
             cardsRecyclerViewMatcher,
-            hasDescendant(
-                allOf(
-                    cardNameMatcher,
-                    withText(cardName)
+            hasSibling(
+                withChild(
+                    allOf(
+                        listNameMatcher,
+                        withText(listName)
+                    )
                 )
             )
         )
-        isRecyclerItemDisplayed(currentCardsRecyclerViewMatcher, withText(cardName))
+        val currentCardMatcher = allOf(
+            cardNameMatcher,
+            withText(cardName)
+        )
+        isRecyclerItemDisplayed(currentCardsRecyclerView, currentCardMatcher)
+    }
+
+    fun getCardColorDisplayed(listName: String, cardName: String): String {
+        val currentCardsRecyclerView = allOf(
+            cardsRecyclerViewMatcher,
+            hasSibling(
+                withChild(
+                    allOf(
+                        listNameMatcher,
+                        withText(listName)
+                    )
+                )
+            )
+        )
+        val currentCardMatcher = allOf(
+            cardNameMatcher,
+            withText(cardName)
+        )
+        scrollToItemInRecyclerView(currentCardsRecyclerView, currentCardMatcher)
+        val color = getColorWithMatcher(
+            allOf(
+                cardColorMatcher,
+                isDescendantOfA(currentCardsRecyclerView),
+                hasSibling(currentCardMatcher)
+            )
+        )
+        return String.format("#%06X", (0xFFFFFF and color!!))
     }
 
     fun tapOnCard(listName: String, cardName: String) {

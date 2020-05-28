@@ -39,19 +39,20 @@ open class BaseRobot {
         onView(withText(text)).inRoot(ToastMatcher()).check(matches(isDisplayed()))
 
     fun tapRecyclerItem(recyclerViewMatcher: Matcher<View>, itemMatcher: Matcher<View>) {
-        onView(recyclerViewMatcher)
-            .perform(
-                actionOnItem<RecyclerView.ViewHolder>(hasDescendant(itemMatcher), scrollTo())
-            )
+        scrollToItemInRecyclerView(recyclerViewMatcher, itemMatcher)
         onView(itemMatcher).perform(click())
     }
 
     fun isRecyclerItemDisplayed(recyclerViewMatcher: Matcher<View>, itemMatcher: Matcher<View>) {
+        scrollToItemInRecyclerView(recyclerViewMatcher, itemMatcher)
+        onView(itemMatcher).check(matches(isDisplayed()))
+    }
+
+    fun scrollToItemInRecyclerView(recyclerViewMatcher: Matcher<View>, itemMatcher: Matcher<View>) {
         onView(recyclerViewMatcher)
             .perform(
                 actionOnItem<RecyclerView.ViewHolder>
                     (hasDescendant(itemMatcher), scrollTo())
             )
-        onView(itemMatcher).check(matches(isDisplayed()))
     }
 }

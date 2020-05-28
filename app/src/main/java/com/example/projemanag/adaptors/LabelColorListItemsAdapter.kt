@@ -32,6 +32,7 @@ class LabelColorListItemsAdapter(
         val item = list[position]
         if (holder is MyViewHolder) {
             holder.itemView.view_main.setBackgroundColor(Color.parseColor(item))
+            holder.itemView.view_main.tag = item
             if (item == mSelectedColor) {
                 holder.itemView.iv_selected_color.visibility = View.VISIBLE
             } else {

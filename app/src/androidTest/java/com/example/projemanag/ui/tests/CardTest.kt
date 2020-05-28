@@ -9,6 +9,7 @@ import com.example.projemanag.ui.robots.card
 import com.example.projemanag.ui.robots.dialog
 import com.example.projemanag.ui.robots.main
 import com.example.projemanag.ui.utils.dateInMills
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,6 +21,8 @@ class CardTest : BaseTest() {
     @get:Rule
     val activityRule = ActivityTestRule(SplashActivity::class.java)
     private val newCardName = "${dateInMills()}_Card"
+    private val green = "#43C86F"
+    private val blue = "#0C90F1"
 
     @Test
     fun createTestCardInTestBoard() {
@@ -33,7 +36,7 @@ class CardTest : BaseTest() {
             tapAddCard(testList)
             typeInCardName(newCardName)
             tapOnCardDoneButton()
-            isCardDisplayed(newCardName)
+            isCardDisplayed(testList, newCardName)
         }
     }
 
@@ -53,8 +56,15 @@ class CardTest : BaseTest() {
             tapOnSelectColor()
 
             dialog {
-                // TODO
+                tapOnColor(green)
             }
+
+            tapOnUpdateButton()
+        }
+
+        board {
+            val actualCardColor = getCardColorDisplayed(testList, testCard)
+            Assert.assertEquals(green, actualCardColor)
         }
     }
 }

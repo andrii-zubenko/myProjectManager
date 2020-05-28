@@ -1,5 +1,6 @@
 package com.example.projemanag.ui.utils
 
+import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
@@ -21,4 +22,19 @@ fun getTextWithMatcher(matcher: Matcher<View>): String? {
         }
     })
     return text
+}
+
+fun getColorWithMatcher(matcher: Matcher<View>): Int? {
+    var color: Int? = null
+    onView(matcher).perform(object : ViewAction {
+        override fun getConstraints() = isA(View::class.java)
+
+        override fun getDescription() = "Get color from View: $color"
+
+        override fun perform(uiController: UiController, view: View) {
+            val cd: ColorDrawable = view.background as ColorDrawable
+            color = cd.color
+        }
+    })
+    return color
 }
