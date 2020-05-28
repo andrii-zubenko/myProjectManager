@@ -13,14 +13,14 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ListTest : BaseTest() {
+class CardTest : BaseTest() {
 
     @get:Rule
     val activityRule = ActivityTestRule(SplashActivity::class.java)
-    private val newListName = "${dateInMills()}_List"
+    private val newCardName = "${dateInMills()}_Card"
 
     @Test
-    fun createTestListInTestBoard() {
+    fun createTestCardInTestBoard() {
         signInWithTestCreds()
 
         main {
@@ -28,10 +28,10 @@ class ListTest : BaseTest() {
         }
 
         board {
-            tapOnAddList()
-            typeInListName(newListName)
-            tapOnListDoneButton()
-            isListDisplayed(newListName)
+            tapAddCard(testList)
+            typeInCardName(newCardName)
+            tapOnCardDoneButton()
+            isCardDisplayed(newCardName)
         }
     }
 }

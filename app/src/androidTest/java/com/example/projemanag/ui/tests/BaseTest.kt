@@ -12,6 +12,9 @@ open class BaseTest {
 
     val testEmail = getJsonValue("email")
     val testPassword = getJsonValue("password")
+    val testBoard = "testBoard"
+    val testList = "testList"
+    val testCard = "testCard"
 
     @Before
     fun setup() {

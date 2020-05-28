@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import com.example.projemanag.R
-import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.utils.Utils
 import kotlinx.android.synthetic.main.activity_splash.tv_app_name
 
