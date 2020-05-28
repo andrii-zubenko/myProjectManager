@@ -68,6 +68,7 @@ class CreateBoardActivity : BaseActivity() {
         val boardName: String = et_board_name.text.toString().trim { it <= ' ' }
         if (boardName.isNotEmpty()) {
             showProgressDialog(resources.getString(R.string.please_wait))
+            Log.d("Progress Dialog", "create board")
             val board: Board = Board(
                 et_board_name.text.toString(),
                 mBoardImageURL,
@@ -82,6 +83,7 @@ class CreateBoardActivity : BaseActivity() {
 
     private fun uploadBoardImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "uploadBoardImage")
         val sRef: StorageReference =
             FirebaseStorage.getInstance().reference.child(
                 "BOARD_IMAGE" + System.currentTimeMillis() +

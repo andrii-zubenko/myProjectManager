@@ -3,6 +3,7 @@ package com.example.projemanag.activities
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.projemanag.R
@@ -58,6 +59,7 @@ class SignUpActivity : BaseActivity() {
         if (validateForm(name, email, password)) {
             Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
+            Log.d("Progress Dialog", "registerUser")
             FirebaseAuth.getInstance()
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->

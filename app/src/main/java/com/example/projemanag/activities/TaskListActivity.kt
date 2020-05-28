@@ -32,6 +32,7 @@ class TaskListActivity : BaseActivity() {
             mBoardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
         }
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "TaskListActivity/OnCreate")
         FirestoreClass().getBoardDetails(this, mBoardDocumentId)
     }
 
@@ -42,6 +43,7 @@ class TaskListActivity : BaseActivity() {
             requestCode == CARD_DETAILS_REQUEST_CODE
         ) {
             showProgressDialog(resources.getString(R.string.please_wait))
+            Log.d("Progress Dialog", "TaskListActivity/onActivityResult")
             FirestoreClass().getBoardDetails(this, mBoardDocumentId)
         } else {
             Log.e("Cancelled", "Cancelled")
@@ -90,12 +92,14 @@ class TaskListActivity : BaseActivity() {
         hideProgressDialog()
         setupActionBar()
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "boardDetails")
         FirestoreClass().getAssignedMembersListDetails(this, mBoardDetails.assignedTo)
     }
 
     fun addUpdateTaskListSuccess() {
         hideProgressDialog()
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "addUpdateTaskListSuccess")
         FirestoreClass().getBoardDetails(this, mBoardDetails.documentID)
     }
 
@@ -104,6 +108,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.add(0, task)
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "createTaskList")
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 
@@ -112,6 +117,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList[position] = task
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "updateTaskList")
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 
@@ -119,6 +125,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.removeAt(position)
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "deleteTaskList")
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 
@@ -136,6 +143,7 @@ class TaskListActivity : BaseActivity() {
         )
         mBoardDetails.taskList[position] = task
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "addCardToTaskList")
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 
@@ -156,6 +164,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
         mBoardDetails.taskList[taskListPosition].cards = cards
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "updateCardsInTaskList")
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 

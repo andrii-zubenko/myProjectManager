@@ -58,7 +58,7 @@ class MyProfileActivity : BaseActivity() {
                 uploadUserImage()
             } else {
                 showProgressDialog(resources.getString(R.string.please_wait))
-
+                Log.d("Progress Dialog", "update user profile")
                 updateUserProfileData()
             }
         }
@@ -156,6 +156,7 @@ class MyProfileActivity : BaseActivity() {
 
     private fun uploadUserImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "uploadUserImage")
         if (mSelectedImageFileUri != null) {
             val sRef: StorageReference =
                 FirebaseStorage.getInstance().reference.child(
