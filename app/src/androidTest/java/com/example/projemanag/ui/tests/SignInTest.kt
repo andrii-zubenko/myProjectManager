@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.example.projemanag.activities.SplashActivity
+import com.example.projemanag.ui.robots.drawer
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.main
 import com.example.projemanag.ui.robots.signIn
@@ -21,6 +22,7 @@ class SignInTest : BaseTest() {
     private val signInActivityTitle = "SIGN IN"
     private val emptyString = ""
     private val pleaseEnterAnEmailAddress = "Please enter an email address"
+    private val userName = "tester"
 
     @Test
     fun verifySignInActivityTitle() {
@@ -54,6 +56,10 @@ class SignInTest : BaseTest() {
 
         main {
             openMemberMenuDrawer()
+        }
+
+        drawer {
+            Assert.assertEquals(userName, getUserName())
         }
     }
 }

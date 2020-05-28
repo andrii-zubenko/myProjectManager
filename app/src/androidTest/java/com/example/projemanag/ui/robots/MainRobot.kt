@@ -9,7 +9,6 @@ import com.example.projemanag.R
 fun main(func: MainRobot.() -> Unit) = MainRobot().apply { func() }
 
 class MainRobot : BaseRobot() {
-    private val toolbarMatcher = withId(R.id.toolbar_main_activity)
     private val membersMenuDrawerMatcher = withId(R.id.drawer_layout)
     private val fabCreateBoardMatcher = withId(R.id.fab_create_board)
     private val boardRecyclerViewMatcher = withId(R.id.rv_boards_list)
