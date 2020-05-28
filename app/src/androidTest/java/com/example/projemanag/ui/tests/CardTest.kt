@@ -5,6 +5,8 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.example.projemanag.activities.SplashActivity
 import com.example.projemanag.ui.robots.board
+import com.example.projemanag.ui.robots.card
+import com.example.projemanag.ui.robots.dialog
 import com.example.projemanag.ui.robots.main
 import com.example.projemanag.ui.utils.dateInMills
 import org.junit.Rule
@@ -32,6 +34,27 @@ class CardTest : BaseTest() {
             typeInCardName(newCardName)
             tapOnCardDoneButton()
             isCardDisplayed(newCardName)
+        }
+    }
+
+    @Test
+    fun assignColorToTestCard() {
+        signInWithTestCreds()
+
+        main {
+            tapOnBoard(testBoard)
+        }
+
+        board {
+            tapOnCard(testList, testCard)
+        }
+
+        card {
+            tapOnSelectColor()
+
+            dialog {
+                // TODO
+            }
         }
     }
 }

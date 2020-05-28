@@ -30,8 +30,7 @@ class BoardRobot : BaseRobot() {
         withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     )
     private val addCardButtonMatcher = allOf(
-        withId(R.id.tv_add_card),
-        withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
+        withId(R.id.tv_add_card)
     )
     private val cardCancelButtonMatcher = allOf(
         withId(R.id.ib_close_card_name),
@@ -46,18 +45,18 @@ class BoardRobot : BaseRobot() {
         withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     )
     private val listsRecyclerViewMatcher = withId(R.id.rv_task_list)
-    private val listMatcher = withId(R.id.ll_task_item)
+    private val listNameMatcher = withId(R.id.tv_task_list_title)
     private val cardsRecyclerViewMatcher = withId(R.id.rv_card_list)
-    private val cardMatcher = withId(R.id.tv_card_name)
+    private val cardNameMatcher = withId(R.id.tv_card_name)
 
-    fun tapAddCard(cardName: String) {
+    fun tapAddCard(listName: String) {
         val currentAddCardButtonMatcher = allOf(
             addCardButtonMatcher,
             hasSibling(
                 withChild(
                     allOf(
-                        withId(R.id.tv_task_list_title),
-                        withText(cardName)
+                        listNameMatcher,
+                        withText(listName)
                     )
                 )
             )
@@ -74,13 +73,34 @@ class BoardRobot : BaseRobot() {
     fun typeInCardName(cardName: String) = typeInText(cardNameFieldMatcher, cardName)
     fun tapOnCardDoneButton() = tapOn(cardDoneButtonMatcher)
     fun isCardDisplayed(cardName: String) {
-        val currentCardRecyclerViewMatcher = allOf(
+        val currentCardsRecyclerViewMatcher = allOf(
             cardsRecyclerViewMatcher,
-            hasDescendant(allOf(
-                cardMatcher,
-                withText(cardName)
-            ))
+            hasDescendant(
+                allOf(
+                    cardNameMatcher,
+                    withText(cardName)
+                )
+            )
         )
-        isRecyclerItemDisplayed(currentCardRecyclerViewMatcher, withText(cardName))
+        isRecyclerItemDisplayed(currentCardsRecyclerViewMatcher, withText(cardName))
+    }
+
+    fun tapOnCard(listName: String, cardName: String) {
+        val currentCardsRecyclerView = allOf(
+            cardsRecyclerViewMatcher,
+            hasSibling(
+                withChild(
+                    allOf(
+                        listNameMatcher,
+                        withText(listName)
+                    )
+                )
+            )
+        )
+        val currentCardMatcher = allOf(
+            cardNameMatcher,
+            withText(cardName)
+        )
+        tapRecyclerItem(currentCardsRecyclerView, currentCardMatcher)
     }
 }
