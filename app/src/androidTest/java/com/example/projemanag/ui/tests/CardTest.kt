@@ -25,7 +25,7 @@ class CardTest : BaseTest() {
     private val blue = "#0C90F1"
 
     @Test
-    fun createTestCardInTestBoard() {
+    fun createCardInTestBoard() {
         signInWithTestCreds()
 
         main {
