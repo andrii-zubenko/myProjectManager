@@ -53,7 +53,7 @@ class SignInTest : BaseTest() {
         signInWithTestCreds()
 
         main {
-            isMainToolbarDisplayed()
+            openMemberMenuDrawer()
         }
     }
 }
