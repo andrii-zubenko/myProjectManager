@@ -90,7 +90,7 @@ class BoardRobot : BaseRobot() {
             cardNameMatcher,
             withText(cardName)
         )
-        scrollToItemInRecyclerView(listsRecyclerViewMatcher,currentCardsRecyclerView)
+        scrollToItemInRecyclerView(listsRecyclerViewMatcher, currentCardsRecyclerView)
         isRecyclerItemDisplayed(currentCardsRecyclerView, currentCardMatcher)
     }
 
@@ -110,7 +110,7 @@ class BoardRobot : BaseRobot() {
             cardNameMatcher,
             withText(cardName)
         )
-        scrollToItemInRecyclerView(listsRecyclerViewMatcher,currentCardsRecyclerView)
+        scrollToItemInRecyclerView(listsRecyclerViewMatcher, currentCardsRecyclerView)
         val color = getColorWithMatcher(
             allOf(
                 cardColorMatcher,
@@ -137,7 +137,7 @@ class BoardRobot : BaseRobot() {
             cardNameMatcher,
             withText(cardName)
         )
-        scrollToItemInRecyclerView(listsRecyclerViewMatcher,currentCardsRecyclerView)
+        scrollToItemInRecyclerView(listsRecyclerViewMatcher, currentCardsRecyclerView)
         tapRecyclerItem(currentCardsRecyclerView, currentCardMatcher)
     }
 }
