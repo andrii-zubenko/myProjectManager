@@ -20,7 +20,7 @@ class ListTest : BaseTest() {
     private val newListName = "${dateInMills()}_List"
 
     @Test
-    fun createTestListInTestBoard() {
+    fun createListInTestBoard() {
         signInWithTestCreds()
 
         main {
