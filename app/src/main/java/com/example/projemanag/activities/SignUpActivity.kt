@@ -1,12 +1,15 @@
 package com.example.projemanag.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.projemanag.R
 import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.User
+import com.example.projemanag.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_sign_up.btn_sign_up
@@ -33,8 +36,7 @@ class SignUpActivity : BaseActivity() {
                     "successfully registered", Toast.LENGTH_LONG
         ).show()
         hideProgressDialog()
-        FirebaseAuth.getInstance().signOut()
-        finish()
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun setUpActionBar() {
@@ -55,7 +57,9 @@ class SignUpActivity : BaseActivity() {
         val email: String = et_email.text.toString().trim { it <= ' ' }
         val password: String = et_password.text.toString().trim { it <= ' ' }
         if (validateForm(name, email, password)) {
+            Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
+            Log.d("Progress Dialog", "registerUser")
             FirebaseAuth.getInstance()
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
@@ -64,11 +68,14 @@ class SignUpActivity : BaseActivity() {
                         val registeredEmail = firebaseUser.email!!
                         val user = User(firebaseUser.uid, name, registeredEmail)
                         FirestoreClass().registerUser(this, user)
+                        Utils.countingIdlingResource.decrement()
                     } else {
+                        hideProgressDialog()
                         Toast.makeText(
                             this,
                             "Registration failed", Toast.LENGTH_LONG
                         ).show()
+                        Utils.countingIdlingResource.decrement()
                     }
                 }
         }

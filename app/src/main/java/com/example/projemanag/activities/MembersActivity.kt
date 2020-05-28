@@ -45,6 +45,7 @@ class MembersActivity : BaseActivity() {
         }
         setupActionBar()
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "MembersActivity?onCreate")
         FirestoreClass().getAssignedMembersListDetails(
             this,
             mBoardDetails.assignedTo
@@ -94,6 +95,7 @@ class MembersActivity : BaseActivity() {
             if (email.isNotEmpty()) {
                 dialog.dismiss()
                 showProgressDialog(resources.getString(R.string.please_wait))
+                Log.d("Progress Dialog", "dialogSearchMember")
                 FirestoreClass().getMemberDetails(this, email)
             } else {
                 Toast.makeText(
@@ -135,6 +137,7 @@ class MembersActivity : BaseActivity() {
         override fun onPreExecute() {
             super.onPreExecute()
             showProgressDialog(resources.getString(R.string.please_wait))
+            Log.d("Progress Dialog", "onPreExecute")
         }
 
         override fun doInBackground(vararg params: Any): String {

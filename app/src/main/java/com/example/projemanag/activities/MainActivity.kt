@@ -50,7 +50,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             .getBoolean(Constants.FCM_TOKEN_UPDATED, false)
         if (tokenUpdated) {
             showProgressDialog(resources.getString(R.string.please_wait))
-            FirestoreClass().loadUserData(this, true)
+            Log.d("Progress Dialog", "MainActivity/onCreate")
         } else {
             FirebaseInstanceId.getInstance().instanceId
                 .addOnSuccessListener(this) { instanceIdResult ->
@@ -58,6 +58,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 }
         }
         FirestoreClass().loadUserData(this, true)
+
         fab_create_board.setOnClickListener {
             val intent = Intent(this, CreateBoardActivity::class.java)
             intent.putExtra(Constants.NAME, mUserName)
@@ -112,7 +113,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     fun updateNavigationUserDetails(user: User, readBoardsList: Boolean) {
-        hideProgressDialog()
         mUserName = user.name
         Glide
             .with(this)
@@ -122,7 +122,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             .into(nav_user_image)
         tv_username.text = user.name
         if (readBoardsList) {
-            showProgressDialog(resources.getString(R.string.please_wait))
             FirestoreClass().getBoardsList(this)
         }
     }
@@ -172,6 +171,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         editor.putBoolean(Constants.FCM_TOKEN_UPDATED, true)
         editor.apply()
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "tokenUpdateSuccess")
         FirestoreClass().loadUserData(this, true)
     }
 
@@ -179,6 +179,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val userHashMap = HashMap<String, Any>()
         userHashMap[Constants.FCM_TOKEN] = token
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "updateFCMToken")
         FirestoreClass().updateUserProfileData(this, userHashMap)
     }
 }

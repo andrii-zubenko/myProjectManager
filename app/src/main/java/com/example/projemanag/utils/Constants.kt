@@ -5,6 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
+import androidx.test.espresso.idling.CountingIdlingResource
+
+object Utils {
+    val countingIdlingResource = CountingIdlingResource("CountingIdlingResource")
+}
 
 object Constants {
     const val USERS: String = "users"

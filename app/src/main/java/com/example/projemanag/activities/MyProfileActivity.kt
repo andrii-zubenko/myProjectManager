@@ -58,7 +58,7 @@ class MyProfileActivity : BaseActivity() {
                 uploadUserImage()
             } else {
                 showProgressDialog(resources.getString(R.string.please_wait))
-
+                Log.d("Progress Dialog", "update user profile")
                 updateUserProfileData()
             }
         }
@@ -93,7 +93,6 @@ class MyProfileActivity : BaseActivity() {
             data!!.data != null
         ) {
             mSelectedImageFileUri = data.data
-
             try {
                 Glide
                     .with(this)
@@ -157,6 +156,7 @@ class MyProfileActivity : BaseActivity() {
 
     private fun uploadUserImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "uploadUserImage")
         if (mSelectedImageFileUri != null) {
             val sRef: StorageReference =
                 FirebaseStorage.getInstance().reference.child(
@@ -172,7 +172,6 @@ class MyProfileActivity : BaseActivity() {
                 taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
                     Log.i("Downloadable Image URL", uri.toString())
                     mProfileImageURL = uri.toString()
-
                     updateUserProfileData()
                 }
             }.addOnFailureListener { exception ->
@@ -181,7 +180,6 @@ class MyProfileActivity : BaseActivity() {
                     exception.message,
                     Toast.LENGTH_LONG
                 ).show()
-
                 hideProgressDialog()
             }
         }

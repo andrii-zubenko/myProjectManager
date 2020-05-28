@@ -5,6 +5,19 @@ apply plugin: 'com.google.gms.google-services'
 
 apply from: "../ktlint.gradle"
 
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.shazam.fork:fork-gradle-plugin:3.10.0'
+    }
+}
+
+apply plugin: 'com.shazam.fork'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -25,7 +38,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
@@ -43,8 +55,26 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.firebase:firebase-messaging:20.1.7'
-
-    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+}
+
+fork {
+    title = "My acceptance tests"
+    testPackage = "com.example.projemanag.ui.tests"
+    totalAllowedRetryQuota = 5
+    retryPerTestCaseQuota = 2
+
+    poolingStrategy {
+        computed {
+            characteristic = "sw"
+            groups {
+                allDevices = 0
+            }
+        }
+    }
 }

@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -223,6 +224,7 @@ class CardDetailsActivity : BaseActivity() {
         taskList.removeAt(taskList.size - 1)
         mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition] = card
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "updateCardDetails")
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 
@@ -255,6 +257,7 @@ class CardDetailsActivity : BaseActivity() {
         taskList.removeAt(taskList.size - 1)
         taskList[mTaskListPosition].cards = cardsList
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "deleteCard")
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
     }
 

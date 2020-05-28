@@ -34,7 +34,7 @@ class CreateBoardActivity : BaseActivity() {
         setContentView(R.layout.activity_create_board)
         setupActionBar()
         if (intent.hasExtra(Constants.NAME)) {
-            mUserName = intent.getStringExtra(Constants.NAME)
+            mUserName = intent.getStringExtra(Constants.NAME)!!
         }
 
         iv_board_image.setOnClickListener {
@@ -57,7 +57,6 @@ class CreateBoardActivity : BaseActivity() {
             if (mSelectedImageFileUri != null) {
                 uploadBoardImage()
             } else {
-                showProgressDialog(resources.getString(R.string.please_wait))
                 createBoard()
             }
         }
@@ -66,17 +65,25 @@ class CreateBoardActivity : BaseActivity() {
     private fun createBoard() {
         val assignedUsersArrayList: ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(getCurrentUserID())
-        var board: Board = Board(
-            et_board_name.text.toString(),
-            mBoardImageURL,
-            mUserName,
-            assignedUsersArrayList
-        )
-        FirestoreClass().createBoard(this, board)
+        val boardName: String = et_board_name.text.toString().trim { it <= ' ' }
+        if (boardName.isNotEmpty()) {
+            showProgressDialog(resources.getString(R.string.please_wait))
+            Log.d("Progress Dialog", "create board")
+            val board: Board = Board(
+                et_board_name.text.toString(),
+                mBoardImageURL,
+                mUserName,
+                assignedUsersArrayList
+            )
+            FirestoreClass().createBoard(this, board)
+        } else {
+            showErrorSnackBar("Please enter a Board name")
+        }
     }
 
     private fun uploadBoardImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
+        Log.d("Progress Dialog", "uploadBoardImage")
         val sRef: StorageReference =
             FirebaseStorage.getInstance().reference.child(
                 "BOARD_IMAGE" + System.currentTimeMillis() +
