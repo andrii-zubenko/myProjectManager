@@ -1,5 +1,6 @@
 package com.example.projemanag.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowManager
@@ -34,8 +35,7 @@ class SignUpActivity : BaseActivity() {
                     "successfully registered", Toast.LENGTH_LONG
         ).show()
         hideProgressDialog()
-        FirebaseAuth.getInstance().signOut()
-        finish()
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun setUpActionBar() {
