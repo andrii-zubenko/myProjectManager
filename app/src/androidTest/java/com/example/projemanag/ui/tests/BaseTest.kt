@@ -8,6 +8,7 @@ import com.example.projemanag.ui.utils.getJsonValue
 import com.example.projemanag.utils.Utils
 import org.junit.After
 import org.junit.Before
+import org.junit.BeforeClass
 
 open class BaseTest {
 
@@ -17,10 +18,16 @@ open class BaseTest {
     val testList = "testList"
     val testCard = "testCard"
 
+    companion object{
+        @BeforeClass @JvmStatic
+        fun dataSetup(){
+            createBoardToBeDeleted()
+        }
+    }
+
     @Before
     fun setup() {
         IdlingRegistry.getInstance().register(Utils.countingIdlingResource)
-        createBoardToBeDeleted()
     }
 
     @After
