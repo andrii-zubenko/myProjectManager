@@ -201,7 +201,7 @@ class TaskListActivity : BaseActivity() {
         finish()
     }
 
-    fun deleteBoard() {
+    private fun deleteBoard() {
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "deleteBoard")
         FirestoreClass().deleteBoard(this, mBoardDetails)

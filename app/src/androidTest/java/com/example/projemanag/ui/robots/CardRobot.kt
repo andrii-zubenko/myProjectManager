@@ -10,6 +10,7 @@ class CardRobot : BaseRobot() {
     private val colorSelectorMatcher = withId(R.id.tv_select_label_color)
     private val dueDateSelectorMatcher = withId(R.id.tv_select_due_date)
     private val updateButtonMatcher = withId(R.id.btn_update_card_details)
+    private val deleteCardButtonMatcher = withId(R.id.action_delete_card)
 
     fun typeInCardName(cardName: String) = typeInText(cardNameMatcher, cardName)
     fun tapOnSelectColor() = tapOn(colorSelectorMatcher)

@@ -18,6 +18,7 @@ import com.example.projemanag.ui.utils.ToastMatcher
 import com.example.projemanag.ui.utils.getTextWithMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 
 open class BaseRobot {
     private val activityTitleMatcher: Matcher<View> = withId(R.id.tv_title)

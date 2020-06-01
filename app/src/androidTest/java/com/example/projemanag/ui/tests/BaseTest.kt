@@ -3,6 +3,7 @@ package com.example.projemanag.ui.tests
 import androidx.test.espresso.IdlingRegistry
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.signIn
+import com.example.projemanag.ui.utils.DataPrep.createBoardToBeDeleted
 import com.example.projemanag.ui.utils.getJsonValue
 import com.example.projemanag.utils.Utils
 import org.junit.After
@@ -19,6 +20,7 @@ open class BaseTest {
     @Before
     fun setup() {
         IdlingRegistry.getInstance().register(Utils.countingIdlingResource)
+        createBoardToBeDeleted()
     }
 
     @After

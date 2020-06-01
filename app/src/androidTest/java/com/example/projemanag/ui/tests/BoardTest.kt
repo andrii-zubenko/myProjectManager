@@ -4,6 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.example.projemanag.activities.SplashActivity
+import com.example.projemanag.ui.robots.alert
+import com.example.projemanag.ui.robots.board
 import com.example.projemanag.ui.robots.createBoard
 import com.example.projemanag.ui.robots.main
 import com.example.projemanag.ui.utils.dateInMills
@@ -20,6 +22,7 @@ class BoardTest : BaseTest() {
     val activityRule = ActivityTestRule(SplashActivity::class.java)
     private val emptyBoardName = ""
     private val newBoardName = "${dateInMills()}_Board"
+    private val boardToBeDeleted = "boardToBeDeleted"
     private val pleaseEnterABoardNameMessage = "Please enter a Board name"
 
     @Test
@@ -53,6 +56,28 @@ class BoardTest : BaseTest() {
 
         main {
             isBoardDisplayed(newBoardName)
+        }
+    }
+
+    @Test
+    fun deleteTestBoard() {
+        signInWithTestCreds()
+
+        main {
+            tapOnBoard(boardToBeDeleted)
+        }
+
+        board {
+            tapOnDeleteBoard()
+        }
+
+        alert {
+            isAlertMessageDisplayed(boardToBeDeleted)
+            tapOnYes()
+        }
+
+        main {
+            // TODO assert that deleted
         }
     }
 }

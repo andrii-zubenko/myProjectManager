@@ -50,6 +50,7 @@ class BoardRobot : BaseRobot() {
     private val cardsRecyclerViewMatcher = withId(R.id.rv_card_list)
     private val cardNameMatcher = withId(R.id.tv_card_name)
     private val cardColorMatcher = withId(R.id.view_label_color)
+    private val deleteBoardButtonMatcher = withId(R.id.action_delete_board)
 
     fun tapAddCard(listName: String) {
         val currentAddCardButtonMatcher = allOf(
@@ -66,6 +67,7 @@ class BoardRobot : BaseRobot() {
         tapRecyclerItem(listsRecyclerViewMatcher, currentAddCardButtonMatcher)
     }
 
+    fun tapOnDeleteBoard() = tapOn(deleteBoardButtonMatcher)
     fun tapOnAddList() = tapRecyclerItem(listsRecyclerViewMatcher, addListButtonMatcher)
     fun typeInListName(listName: String) = typeInText(listNameFieldMatcher, listName)
     fun tapOnListDoneButton() = tapOn(listDoneButtonMatcher)
