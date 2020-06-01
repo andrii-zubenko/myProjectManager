@@ -23,6 +23,9 @@ class SignInTest : BaseTest() {
     private val emptyString = ""
     private val pleaseEnterAnEmailAddress = "Please enter an email address"
     private val userName = "tester"
+    private val authFailedMessage = "Authentication failed."
+    private val invalidEmail = "invalidEmail"
+    private val invalidPassword = "invalidPassword"
 
     @Test
     fun verifySignInActivityTitle() {
@@ -60,6 +63,20 @@ class SignInTest : BaseTest() {
 
         drawer {
             Assert.assertEquals(userName, getUserName())
+        }
+    }
+
+    @Test
+    fun signInWithInValidCreds() {
+        intro {
+            tapOnSignInButton()
+        }
+
+        signIn {
+            typeInEmail(invalidEmail)
+            typeInPassword(invalidPassword)
+            tapOnSignInButton()
+            toastWithTextIsDiplayed(authFailedMessage)
         }
     }
 }

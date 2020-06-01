@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_sign_up.toolbar_sign_up_activity
 
 class SignUpActivity : BaseActivity() {
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -60,7 +62,7 @@ class SignUpActivity : BaseActivity() {
             Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
             Log.d("Progress Dialog", "registerUser")
-            FirebaseAuth.getInstance()
+            auth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
