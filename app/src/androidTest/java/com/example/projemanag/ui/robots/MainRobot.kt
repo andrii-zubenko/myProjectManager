@@ -5,6 +5,7 @@ import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.example.projemanag.R
+import com.example.projemanag.ui.utils.getNumberOfItemsInRecyclerView
 
 fun main(func: MainRobot.() -> Unit) = MainRobot().apply { func() }
 
@@ -15,10 +16,13 @@ class MainRobot : BaseRobot() {
 
     fun openMemberMenuDrawer() =
         onView(membersMenuDrawerMatcher).perform(DrawerActions.open())
+
     fun tapOnfabCreateBoard() = tapOn(fabCreateBoardMatcher)
     fun isBoardDisplayed(boardName: String) =
         isRecyclerItemDisplayed(boardRecyclerViewMatcher, withText(boardName))
 
     fun tapOnBoard(boardName: String) =
         tapRecyclerItem(boardRecyclerViewMatcher, withText(boardName))
+
+    fun getNumberOfBoards(): Int? = getNumberOfItemsInRecyclerView(boardRecyclerViewMatcher)
 }

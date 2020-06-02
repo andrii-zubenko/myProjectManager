@@ -8,6 +8,7 @@ import com.example.projemanag.ui.robots.alert
 import com.example.projemanag.ui.robots.board
 import com.example.projemanag.ui.robots.createBoard
 import com.example.projemanag.ui.robots.main
+import com.example.projemanag.ui.utils.DataPrep.createBoardToBeDeleted
 import com.example.projemanag.ui.utils.dateInMills
 import org.junit.Assert
 import org.junit.Rule
@@ -61,9 +62,12 @@ class BoardTest : BaseTest() {
 
     @Test
     fun deleteTestBoard() {
+        var numberOfBoards: Int? = null
+        createBoardToBeDeleted()
         signInWithTestCreds()
 
         main {
+            numberOfBoards = getNumberOfBoards()
             tapOnBoard(boardToBeDeleted)
         }
 
@@ -77,7 +81,8 @@ class BoardTest : BaseTest() {
         }
 
         main {
-            // TODO assert that deleted
+            val newNumberOfBoards = getNumberOfBoards()
+            Assert.assertEquals(numberOfBoards?.minus(1), newNumberOfBoards)
         }
     }
 }

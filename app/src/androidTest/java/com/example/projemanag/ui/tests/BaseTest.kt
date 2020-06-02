@@ -3,12 +3,10 @@ package com.example.projemanag.ui.tests
 import androidx.test.espresso.IdlingRegistry
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.signIn
-import com.example.projemanag.ui.utils.DataPrep.createBoardToBeDeleted
 import com.example.projemanag.ui.utils.getJsonValue
 import com.example.projemanag.utils.Utils
 import org.junit.After
 import org.junit.Before
-import org.junit.BeforeClass
 
 open class BaseTest {
 
@@ -17,13 +15,6 @@ open class BaseTest {
     val testBoard = "testBoard"
     val testList = "testList"
     val testCard = "testCard"
-
-    companion object{
-        @BeforeClass @JvmStatic
-        fun dataSetup(){
-            createBoardToBeDeleted()
-        }
-    }
 
     @Before
     fun setup() {
