@@ -12,6 +12,8 @@ object Utils {
 }
 
 object Constants {
+    const val APIKey = "AIzaSyBEAfbB6NXf8OZPImaqs0g2byv9E66pG84"
+    const val AUTH_BASE_URL: String = "https://identitytoolkit.googleapis.com/v1/"
     const val USERS: String = "users"
     const val BOARDS: String = "boards"
     const val ASSIGNED_TO: String = "assignedTo"

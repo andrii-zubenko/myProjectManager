@@ -7,13 +7,20 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.projemanag.R
-import com.example.projemanag.firebase.FirestoreClass
+import com.example.projemanag.api.LoginPostData
+import com.example.projemanag.api.RetrofitBuilder
+import com.example.projemanag.utils.Constants
 import com.example.projemanag.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.btn_sign_in
 import kotlinx.android.synthetic.main.activity_sign_in.et_email_sign_in
 import kotlinx.android.synthetic.main.activity_sign_in.et_password_sign_in
 import kotlinx.android.synthetic.main.activity_sign_in.toolbar_sign_in_activity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.HttpRetryException
 
 class SignInActivity : BaseActivity() {
 
@@ -59,23 +66,36 @@ class SignInActivity : BaseActivity() {
             Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
             Log.d("Progress Dialog", "signInRegisteredUser")
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        FirestoreClass().loadUserData(this)
-                        Log.d(TAG, "signInWithEmail:success")
-                        Utils.countingIdlingResource.decrement()
-                    } else {
-                        hideProgressDialog()
-                        Log.w(TAG, "signInWithEmail:failure", task.exception)
-                        Toast.makeText(
-                            this,
-                            "Authentication failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Utils.countingIdlingResource.decrement()
+            CoroutineScope(Dispatchers.IO).launch {
+                val response =
+                    RetrofitBuilder.apiService.sighIn(
+                        Constants.APIKey,
+                        LoginPostData(email, password)
+                    )
+                withContext(Dispatchers.Main) {
+                    try {
+                        if (response.isSuccessful) {
+                            println("Response $response")
+                            // TODO loadUserData
+                            Log.d(TAG, "signInWithEmail:success")
+                            Utils.countingIdlingResource.decrement()
+                        } else {
+                            hideProgressDialog()
+                            Log.w(TAG, "Failure to sigIn, Code:${response.code()}")
+                            Toast.makeText(
+                                this@SignInActivity,
+                                "Auth failed",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Utils.countingIdlingResource.decrement()
+                        }
+                    } catch (e: HttpRetryException) {
+                        println("Exception ${e.message}")
+                    } catch (e: Throwable) {
+                        println("Ooops: Something else went wrong")
                     }
                 }
+            }
         }
     }
 
