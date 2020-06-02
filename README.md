@@ -4,6 +4,8 @@ It gives you an ability to:
 * Crete/Delete Lists inside Boards (edit List name)
 * Create/Delete Cards inside Lists (edit Card name, assign user, add label colors, add due date)
 
+MyProjectManager uses FireBase Authentication SDK, Firebase Cloud Firestore, Firebase Storage
+
 
 ## Run Espresso Instrumentation tests with the Fork
 From the command line execute the following Gradle commands:
