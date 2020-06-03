@@ -2,12 +2,29 @@ package com.example.projemanag.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 data class Card(
+
+    @Expose
+    @SerializedName("name")
     val name: String = "",
+
+    @Expose
+    @SerializedName("createdBy")
     val createdBy: String = "",
+
+    @Expose
+    @SerializedName("assignedTo")
     val assignedTo: ArrayList<String> = ArrayList(),
+
+    @Expose
+    @SerializedName("labelColor")
     val labelColor: String = "",
+
+    @Expose
+    @SerializedName("dueDate")
     val dueDate: Long = 0
 ) : Parcelable {
     constructor(source: Parcel) : this(

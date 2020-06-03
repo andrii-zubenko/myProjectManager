@@ -16,6 +16,8 @@ import com.example.projemanag.adaptors.BoardItemsAdapter
 import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.Board
 import com.example.projemanag.models.User
+import com.example.projemanag.repository.Repository.getBoardsList
+import com.example.projemanag.repository.Repository.loadUserData
 import com.example.projemanag.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -57,7 +59,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     updateFCMToken(instanceIdResult.token)
                 }
         }
-        FirestoreClass().loadUserData(this, true)
+        loadUserData(this, true)
 
         fab_create_board.setOnClickListener {
             val intent = Intent(this, CreateBoardActivity::class.java)
@@ -122,7 +124,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             .into(nav_user_image)
         tv_username.text = user.name
         if (readBoardsList) {
-            FirestoreClass().getBoardsList(this)
+            getBoardsList(this)
         }
     }
 
@@ -131,11 +133,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         if (resultCode == Activity.RESULT_OK &&
             requestCode == MY_PROFILE_REQUEST_CODE
         ) {
-            FirestoreClass().loadUserData(this)
+            loadUserData(this)
         } else if (resultCode == Activity.RESULT_OK &&
             requestCode == CREATE_BOARD_REQUEST_CODE
         ) {
-            FirestoreClass().getBoardsList(this)
+            getBoardsList(this)
         } else {
             Log.e("Cancelled", "Cancelled")
         }
@@ -172,7 +174,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         editor.apply()
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "tokenUpdateSuccess")
-        FirestoreClass().loadUserData(this, true)
+        loadUserData(this, true)
     }
 
     private fun updateFCMToken(token: String) {

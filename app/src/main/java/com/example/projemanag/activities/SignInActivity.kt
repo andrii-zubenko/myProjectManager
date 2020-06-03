@@ -8,7 +8,9 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.example.projemanag.R
 import com.example.projemanag.api.LoginPostData
-import com.example.projemanag.api.RetrofitBuilder
+import com.example.projemanag.api.RetrofitAuthBuilder
+import com.example.projemanag.models.Data.authUser
+import com.example.projemanag.repository.Repository.loadUserData
 import com.example.projemanag.utils.Constants
 import com.example.projemanag.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
@@ -63,22 +65,20 @@ class SignInActivity : BaseActivity() {
         val email: String = et_email_sign_in.text.toString().trim { it <= ' ' }
         val password: String = et_password_sign_in.text.toString().trim { it <= ' ' }
         if (validateForm(email, password)) {
-            Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
             Log.d("Progress Dialog", "signInRegisteredUser")
             CoroutineScope(Dispatchers.IO).launch {
                 val response =
-                    RetrofitBuilder.apiService.sighIn(
+                    RetrofitAuthBuilder.apiService.sighIn(
                         Constants.APIKey,
                         LoginPostData(email, password)
                     )
                 withContext(Dispatchers.Main) {
                     try {
                         if (response.isSuccessful) {
-                            println("Response $response")
-                            // TODO loadUserData
+                            authUser = response.body()!!
+                            loadUserData(this@SignInActivity)
                             Log.d(TAG, "signInWithEmail:success")
-                            Utils.countingIdlingResource.decrement()
                         } else {
                             hideProgressDialog()
                             Log.w(TAG, "Failure to sigIn, Code:${response.code()}")
@@ -87,7 +87,6 @@ class SignInActivity : BaseActivity() {
                                 "Auth failed",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            Utils.countingIdlingResource.decrement()
                         }
                     } catch (e: HttpRetryException) {
                         println("Exception ${e.message}")

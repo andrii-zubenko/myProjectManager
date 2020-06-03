@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.projemanag.R
 import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.User
+import com.example.projemanag.repository.Repository.loadUserData
 import com.example.projemanag.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -35,7 +36,7 @@ class MyProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_profile)
         setupActionBar()
-        FirestoreClass().loadUserData(this)
+        loadUserData(this)
 
         iv_profile_user_image.setOnClickListener {
             if (ContextCompat.checkSelfPermission(

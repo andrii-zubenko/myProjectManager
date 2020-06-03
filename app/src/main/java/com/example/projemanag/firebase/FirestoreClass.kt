@@ -80,6 +80,7 @@ class FirestoreClass {
             }
     }
 
+
     fun createBoard(activity: CreateBoardActivity, board: Board) {
         Utils.countingIdlingResource.increment()
         mFireStore.collection(Constants.BOARDS)
@@ -105,27 +106,28 @@ class FirestoreClass {
             }
     }
 
-    fun getBoardsList(activity: MainActivity) {
-        Utils.countingIdlingResource.increment()
-        mFireStore.collection(Constants.BOARDS)
-            .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserId())
-            .get()
-            .addOnSuccessListener { document ->
-                Log.i(activity.javaClass.simpleName, document.documents.toString())
-                val boardsList: ArrayList<Board> = ArrayList()
-                for (i in document) {
-                    val board = i.toObject(Board::class.java)
-                    board.documentID = i.id
-                    boardsList.add(board)
-                }
-                activity.populateBoardsListToUI(boardsList)
-                Utils.countingIdlingResource.decrement()
-            }.addOnFailureListener { exception ->
-                activity.hideProgressDialog()
-                Log.i(activity.javaClass.simpleName, "Error while creating a board.", exception)
-                Utils.countingIdlingResource.decrement()
-            }
-    }
+//    //in process
+//    fun getBoardsList(activity: MainActivity) {
+//        Utils.countingIdlingResource.increment()
+//        mFireStore.collection(Constants.BOARDS)
+//            .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserId())
+//            .get()
+//            .addOnSuccessListener { document ->
+//                Log.i(activity.javaClass.simpleName, document.documents.toString())
+//                val boardsList: ArrayList<Board> = ArrayList()
+//                for (i in document) {
+//                    val board = i.toObject(Board::class.java)
+//                    board.documentID = i.id
+//                    boardsList.add(board)
+//                }
+//                activity.populateBoardsListToUI(boardsList)
+//                Utils.countingIdlingResource.decrement()
+//            }.addOnFailureListener { exception ->
+//                activity.hideProgressDialog()
+//                Log.i(activity.javaClass.simpleName, "Error while creating a board.", exception)
+//                Utils.countingIdlingResource.decrement()
+//            }
+//    }
 
     fun addUpdateTaskList(activity: Activity, board: Board) {
         Utils.countingIdlingResource.increment()
@@ -185,39 +187,41 @@ class FirestoreClass {
             }
     }
 
-    fun loadUserData(activity: Activity, readBoardsList: Boolean = false) {
-        Utils.countingIdlingResource.increment()
-        mFireStore.collection(Constants.USERS)
-            .document(getCurrentUserId())
-            .get()
-            .addOnSuccessListener { document ->
-                val loggedInUser = document.toObject(User::class.java)!!
 
-                when (activity) {
-                    is SignInActivity -> {
-                        activity.signInSuccess()
-                    }
-                    is MainActivity -> {
-                        activity.updateNavigationUserDetails(loggedInUser, readBoardsList)
-                    }
-                    is MyProfileActivity -> {
-                        activity.setUserDataInUI(loggedInUser)
-                    }
-                }
-                Utils.countingIdlingResource.decrement()
-            }.addOnFailureListener { e ->
-                when (activity) {
-                    is SignInActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                    is MainActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                }
-                Log.e(activity.javaClass.simpleName, "Error writing document", e)
-                Utils.countingIdlingResource.decrement()
-            }
-    }
+//    //done
+//    fun loadUserData(activity: Activity, readBoardsList: Boolean = false) {
+//        Utils.countingIdlingResource.increment()
+//        mFireStore.collection(Constants.USERS)
+//            .document(getCurrentUserId())
+//            .get()
+//            .addOnSuccessListener { document ->
+//                val loggedInUser = document.toObject(User::class.java)!!
+//
+//                when (activity) {
+//                    is SignInActivity -> {
+//                        activity.signInSuccess()
+//                    }
+//                    is MainActivity -> {
+//                        activity.updateNavigationUserDetails(loggedInUser, readBoardsList)
+//                    }
+//                    is MyProfileActivity -> {
+//                        activity.setUserDataInUI(loggedInUser)
+//                    }
+//                }
+//                Utils.countingIdlingResource.decrement()
+//            }.addOnFailureListener { e ->
+//                when (activity) {
+//                    is SignInActivity -> {
+//                        activity.hideProgressDialog()
+//                    }
+//                    is MainActivity -> {
+//                        activity.hideProgressDialog()
+//                    }
+//                }
+//                Log.e(activity.javaClass.simpleName, "Error writing document", e)
+//                Utils.countingIdlingResource.decrement()
+//            }
+//    }
 
     fun getAssignedMembersListDetails(activity: Activity, assignedTo: ArrayList<String>) {
         Utils.countingIdlingResource.increment()

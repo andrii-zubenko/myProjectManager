@@ -10,10 +10,10 @@ import androidx.test.espresso.idling.CountingIdlingResource
 object Utils {
     val countingIdlingResource = CountingIdlingResource("CountingIdlingResource")
 }
-
 object Constants {
     const val APIKey = "AIzaSyBEAfbB6NXf8OZPImaqs0g2byv9E66pG84"
     const val AUTH_BASE_URL: String = "https://identitytoolkit.googleapis.com/v1/"
+    const val BASE_URL: String = "https://firestore.googleapis.com/v1/projects/projemanag-505df/"
     const val USERS: String = "users"
     const val BOARDS: String = "boards"
     const val ASSIGNED_TO: String = "assignedTo"

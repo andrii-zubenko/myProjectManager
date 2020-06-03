@@ -2,13 +2,32 @@ package com.example.projemanag.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 data class Board(
+    @Expose
+    @SerializedName("name")
     val name: String = "",
+
+    @Expose
+    @SerializedName("image")
     val image: String = "",
+
+    @Expose
+    @SerializedName("createdBy")
     val createdBy: String = "",
+
+    @Expose
+    @SerializedName("assignedTo")
     val assignedTo: ArrayList<String> = ArrayList(),
+
+    @Expose
+    @SerializedName("documentID")
     var documentID: String = "",
+
+    @Expose
+    @SerializedName("taskList")
     var taskList: ArrayList<Task> = ArrayList()
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
