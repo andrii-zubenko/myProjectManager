@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.projemanag.R
 import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.Board
+import com.example.projemanag.repository.Repository
 import com.example.projemanag.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -75,7 +76,7 @@ class CreateBoardActivity : BaseActivity() {
                 mUserName,
                 assignedUsersArrayList
             )
-            FirestoreClass().createBoard(this, board)
+            Repository().createBoard(this, board)
         } else {
             showErrorSnackBar("Please enter a Board name")
         }

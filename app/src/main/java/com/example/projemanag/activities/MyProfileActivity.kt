@@ -12,9 +12,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.projemanag.R
-import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.User
-import com.example.projemanag.repository.Repository.loadUserData
+import com.example.projemanag.repository.Repository
 import com.example.projemanag.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -36,7 +35,7 @@ class MyProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_profile)
         setupActionBar()
-        loadUserData(this)
+        Repository().loadUserData(this)
 
         iv_profile_user_image.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -152,7 +151,7 @@ class MyProfileActivity : BaseActivity() {
         if (et_mobile.text.toString() != mUserDetails.mobile.toString()) {
             userHashMap[Constants.MOBILE] = et_mobile.text.toString().toLong()
         }
-        FirestoreClass().updateUserProfileData(this, userHashMap)
+        Repository().updateUserProfileData(this, userHashMap)
     }
 
     private fun uploadUserImage() {

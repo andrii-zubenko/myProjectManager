@@ -10,11 +10,11 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projemanag.R
 import com.example.projemanag.adaptors.TaskListItemsAdapter
-import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.Board
 import com.example.projemanag.models.Card
 import com.example.projemanag.models.Task
 import com.example.projemanag.models.User
+import com.example.projemanag.repository.Repository
 import com.example.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_task_list.rv_task_list
 import kotlinx.android.synthetic.main.activity_task_list.toolbar_task_list_activity
@@ -34,7 +34,7 @@ class TaskListActivity : BaseActivity() {
         }
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "TaskListActivity/OnCreate")
-        FirestoreClass().getBoardDetails(this, mBoardDocumentId)
+        Repository().getBoardDetails(this, mBoardDocumentId)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -45,7 +45,7 @@ class TaskListActivity : BaseActivity() {
         ) {
             showProgressDialog(resources.getString(R.string.please_wait))
             Log.d("Progress Dialog", "TaskListActivity/onActivityResult")
-            FirestoreClass().getBoardDetails(this, mBoardDocumentId)
+            Repository().getBoardDetails(this, mBoardDocumentId)
         } else {
             Log.e("Cancelled", "Cancelled")
         }
@@ -98,23 +98,23 @@ class TaskListActivity : BaseActivity() {
         setupActionBar()
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "boardDetails")
-        FirestoreClass().getAssignedMembersListDetails(this, mBoardDetails.assignedTo)
+        Repository().getAssignedMembersListDetails(this, mBoardDetails.assignedTo)
     }
 
     fun addUpdateTaskListSuccess() {
         hideProgressDialog()
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "addUpdateTaskListSuccess")
-        FirestoreClass().getBoardDetails(this, mBoardDetails.documentID)
+        Repository().getBoardDetails(this, mBoardDetails.documentID)
     }
 
     fun createTaskList(taskListName: String) {
-        val task = Task(taskListName, FirestoreClass().getCurrentUserId())
+        val task = Task(taskListName, Repository().getCurrentUserId())
         mBoardDetails.taskList.add(0, task)
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "createTaskList")
-        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+        Repository().addUpdateTaskList(this, mBoardDetails)
     }
 
     fun updateTaskList(position: Int, listName: String, model: Task) {
@@ -123,7 +123,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "updateTaskList")
-        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+        Repository().addUpdateTaskList(this, mBoardDetails)
     }
 
     fun deleteTaskList(position: Int) {
@@ -131,14 +131,14 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "deleteTaskList")
-        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+        Repository().addUpdateTaskList(this, mBoardDetails)
     }
 
     fun addCardToTaskList(position: Int, cardName: String) {
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
         val cardAssignedUsersList: ArrayList<String> = ArrayList()
-        cardAssignedUsersList.add(FirestoreClass().getCurrentUserId())
-        val card = Card(cardName, FirestoreClass().getCurrentUserId(), cardAssignedUsersList)
+        cardAssignedUsersList.add(Repository().getCurrentUserId())
+        val card = Card(cardName, Repository().getCurrentUserId(), cardAssignedUsersList)
         val cardsList = mBoardDetails.taskList[position].cards
         cardsList.add(card)
         val task = Task(
@@ -149,7 +149,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList[position] = task
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "addCardToTaskList")
-        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+        Repository().addUpdateTaskList(this, mBoardDetails)
     }
 
     fun boardMembersDetailList(list: ArrayList<User>) {
@@ -170,7 +170,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList[taskListPosition].cards = cards
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "updateCardsInTaskList")
-        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+        Repository().addUpdateTaskList(this, mBoardDetails)
     }
 
     private fun alertDialogForDeleteBoard(boardName: String) {
@@ -204,7 +204,7 @@ class TaskListActivity : BaseActivity() {
     private fun deleteBoard() {
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "deleteBoard")
-        FirestoreClass().deleteBoard(this, mBoardDetails)
+        Repository().deleteBoard(this, mBoardDetails)
     }
 
     companion object {

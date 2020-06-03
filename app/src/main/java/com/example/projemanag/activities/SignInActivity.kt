@@ -10,10 +10,8 @@ import com.example.projemanag.R
 import com.example.projemanag.api.LoginPostData
 import com.example.projemanag.api.RetrofitAuthBuilder
 import com.example.projemanag.models.Data.authUser
-import com.example.projemanag.repository.Repository.loadUserData
+import com.example.projemanag.repository.Repository
 import com.example.projemanag.utils.Constants
-import com.example.projemanag.utils.Utils
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.btn_sign_in
 import kotlinx.android.synthetic.main.activity_sign_in.et_email_sign_in
 import kotlinx.android.synthetic.main.activity_sign_in.et_password_sign_in
@@ -26,13 +24,13 @@ import java.net.HttpRetryException
 
 class SignInActivity : BaseActivity() {
 
-    private lateinit var auth: FirebaseAuth
-    private val TAG = "Sign in"
+//    private lateinit var auth: FirebaseAuth
+    private val TAG = "SignIn"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        auth = FirebaseAuth.getInstance()
+//        auth = FirebaseAuth.getInstance()
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -69,7 +67,7 @@ class SignInActivity : BaseActivity() {
             Log.d("Progress Dialog", "signInRegisteredUser")
             CoroutineScope(Dispatchers.IO).launch {
                 val response =
-                    RetrofitAuthBuilder.apiService.sighIn(
+                    RetrofitAuthBuilder.apiService.signIn(
                         Constants.APIKey,
                         LoginPostData(email, password)
                     )
@@ -77,7 +75,7 @@ class SignInActivity : BaseActivity() {
                     try {
                         if (response.isSuccessful) {
                             authUser = response.body()!!
-                            loadUserData(this@SignInActivity)
+                            Repository().loadUserData(this@SignInActivity)
                             Log.d(TAG, "signInWithEmail:success")
                         } else {
                             hideProgressDialog()

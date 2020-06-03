@@ -12,9 +12,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projemanag.R
 import com.example.projemanag.adaptors.MemberListItemsAdapter
-import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.Board
 import com.example.projemanag.models.User
+import com.example.projemanag.repository.Repository
 import com.example.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_members.rv_members_list
 import kotlinx.android.synthetic.main.activity_members.toolbar_members_activity
@@ -46,7 +46,7 @@ class MembersActivity : BaseActivity() {
         setupActionBar()
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "MembersActivity?onCreate")
-        FirestoreClass().getAssignedMembersListDetails(
+        Repository().getAssignedMembersListDetails(
             this,
             mBoardDetails.assignedTo
         )
@@ -96,7 +96,7 @@ class MembersActivity : BaseActivity() {
                 dialog.dismiss()
                 showProgressDialog(resources.getString(R.string.please_wait))
                 Log.d("Progress Dialog", "dialogSearchMember")
-                FirestoreClass().getMemberDetails(this, email)
+                Repository().getMemberDetails(this, email)
             } else {
                 Toast.makeText(
                     this,
@@ -113,7 +113,7 @@ class MembersActivity : BaseActivity() {
 
     fun memberDetails(user: User) {
         mBoardDetails.assignedTo.add(user.id)
-        FirestoreClass().assignMemberToBoard(this, mBoardDetails, user)
+        Repository().assignMemberToBoard(this, mBoardDetails, user)
     }
 
     override fun onBackPressed() {

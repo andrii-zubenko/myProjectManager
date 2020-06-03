@@ -7,25 +7,34 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.projemanag.R
-import com.example.projemanag.firebase.FirestoreClass
+import com.example.projemanag.api.LoginPostData
+import com.example.projemanag.api.RetrofitAuthBuilder
+import com.example.projemanag.models.Data.authUser
 import com.example.projemanag.models.User
+import com.example.projemanag.repository.Repository
+import com.example.projemanag.utils.Constants
 import com.example.projemanag.utils.Utils
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_sign_up.btn_sign_up
 import kotlinx.android.synthetic.main.activity_sign_up.et_email
 import kotlinx.android.synthetic.main.activity_sign_up.et_name
 import kotlinx.android.synthetic.main.activity_sign_up.et_password
 import kotlinx.android.synthetic.main.activity_sign_up.toolbar_sign_up_activity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.HttpRetryException
 
 class SignUpActivity : BaseActivity() {
 
-    private lateinit var auth: FirebaseAuth
+//    private lateinit var auth: FirebaseAuth
+    private val TAG = "SignUp"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-        auth = FirebaseAuth.getInstance()
+//        auth = FirebaseAuth.getInstance()
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -62,25 +71,36 @@ class SignUpActivity : BaseActivity() {
         if (validateForm(name, email, password)) {
             Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
-            Log.d("Progress Dialog", "registerUser")
-            auth
-                .createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val firebaseUser: FirebaseUser = task.result!!.user!!
-                        val registeredEmail = firebaseUser.email!!
-                        val user = User(firebaseUser.uid, name, registeredEmail)
-                        FirestoreClass().registerUser(this, user)
-                        Utils.countingIdlingResource.decrement()
-                    } else {
-                        hideProgressDialog()
-                        Toast.makeText(
-                            this,
-                            "Registration failed", Toast.LENGTH_LONG
-                        ).show()
-                        Utils.countingIdlingResource.decrement()
+            CoroutineScope(Dispatchers.IO).launch {
+                val response =
+                    RetrofitAuthBuilder.apiService.signUp(
+                        Constants.APIKey,
+                        LoginPostData(email, password)
+                    )
+                withContext(Dispatchers.Main) {
+                    try {
+                        if (response.isSuccessful) {
+                            authUser = response.body()!!
+                            val newUser = User(authUser.localId, name, authUser.email)
+                            println(newUser)
+                            Repository().addRegisteredUser(this@SignUpActivity, newUser)
+                            Log.d(TAG, "signInWithEmail:success")
+                        } else {
+                            hideProgressDialog()
+                            Log.w(TAG, "Failure to sigIn, Code:${response.code()}")
+                            Toast.makeText(
+                                this@SignUpActivity,
+                                "Auth failed",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: HttpRetryException) {
+                        println("Exception ${e.message}")
+                    } catch (e: Throwable) {
+                        println("Ooops: Something else went wrong")
                     }
                 }
+            }
         }
     }
 

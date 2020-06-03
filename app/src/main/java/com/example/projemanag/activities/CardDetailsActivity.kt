@@ -15,12 +15,12 @@ import com.example.projemanag.R
 import com.example.projemanag.adaptors.CardMemberListItemsAdapter
 import com.example.projemanag.dialogs.LabelColorListDialog
 import com.example.projemanag.dialogs.MembersListDialog
-import com.example.projemanag.firebase.FirestoreClass
 import com.example.projemanag.models.Board
 import com.example.projemanag.models.Card
 import com.example.projemanag.models.SelectedMembers
 import com.example.projemanag.models.Task
 import com.example.projemanag.models.User
+import com.example.projemanag.repository.Repository
 import com.example.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_card_details.btn_update_card_details
 import kotlinx.android.synthetic.main.activity_card_details.et_name_card_details
@@ -225,7 +225,7 @@ class CardDetailsActivity : BaseActivity() {
         mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition] = card
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "updateCardDetails")
-        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+        Repository().addUpdateTaskList(this, mBoardDetails)
     }
 
     private fun alertDialogForDeleteCard(cardName: String) {
@@ -258,7 +258,7 @@ class CardDetailsActivity : BaseActivity() {
         taskList[mTaskListPosition].cards = cardsList
         showProgressDialog(resources.getString(R.string.please_wait))
         Log.d("Progress Dialog", "deleteCard")
-        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+        Repository().addUpdateTaskList(this, mBoardDetails)
     }
 
     private fun labelColorsListDialog() {

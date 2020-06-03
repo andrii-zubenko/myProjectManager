@@ -65,4 +65,8 @@ data class User(
             return arrayOfNulls(size)
         }
     }
+
+    override fun toString(): String {
+        return "id:$id name:$name email:$email"
+    }
 }
