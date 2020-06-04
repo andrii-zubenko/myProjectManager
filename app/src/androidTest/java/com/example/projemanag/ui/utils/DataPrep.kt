@@ -8,9 +8,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 
 object DataPrep {
-    fun createBoardToBeDeleted() {
+    fun createBoardToBeDeleted(name: String) {
         val boardToBeDeleted = Board(
-            name = "boardToBeDeleted",
+            name = name,
             assignedTo = arrayListOf("8A7iNZWE3WciRBWqdBizNVprhvD3")
         )
         Utils.countingIdlingResource.increment()

@@ -23,7 +23,7 @@ class BoardTest : BaseTest() {
     val activityRule = ActivityTestRule(SplashActivity::class.java)
     private val emptyBoardName = ""
     private val newBoardName = "${dateInMills()}_Board"
-    private val boardToBeDeleted = "boardToBeDeleted"
+    private val boardToBeDeleted = "${dateInMills()}_DeleteBoard"
     private val pleaseEnterABoardNameMessage = "Please enter a Board name"
 
     @Test
@@ -63,7 +63,7 @@ class BoardTest : BaseTest() {
     @Test
     fun deleteTestBoard() {
         var numberOfBoards: Int? = null
-        createBoardToBeDeleted()
+        createBoardToBeDeleted(boardToBeDeleted)
         signInWithTestCreds()
 
         main {
