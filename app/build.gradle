@@ -64,7 +64,7 @@ dependencies {
 }
 
 fork {
-    title = "My acceptance tests"
+    title = "ProjeManage Regression"
     testPackage = "com.example.projemanag.ui.tests"
     totalAllowedRetryQuota = 5
     retryPerTestCaseQuota = 2
