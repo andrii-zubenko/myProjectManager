@@ -6,6 +6,11 @@ It gives you an ability to:
 
 MyProjectManager uses FireBase Authentication SDK, Firebase Cloud Firestore, Firebase Storage
 
+## Tests
+* Espresso framework
+* Robot pattern architecture
+* Gradle/Fork runner
+* Implementation of Counting Idling Resource
 
 ## Run Espresso Instrumentation tests with the Fork
 From the command line execute the following Gradle commands:
