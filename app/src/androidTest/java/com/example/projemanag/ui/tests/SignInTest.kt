@@ -19,6 +19,7 @@ class SignInTest : BaseTest() {
 
     @get:Rule
     val activityRule = ActivityTestRule(SplashActivity::class.java)
+
     private val signInActivityTitle = "SIGN IN"
     private val emptyString = ""
     private val pleaseEnterAnEmailAddress = "Please enter an email address"
