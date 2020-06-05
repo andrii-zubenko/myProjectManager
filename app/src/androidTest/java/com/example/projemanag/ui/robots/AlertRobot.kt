@@ -11,8 +11,8 @@ class AlertRobot : BaseRobot() {
     private val yesButtonMatcher = withText("YES")
     private val noButtonMatcher = withText("NO")
 
-    fun isAlertMessageDisplayed(boardName: String) {
-        onView(withText("Are you sure you want to delete board '$boardName'?"))
+    fun isAlertMessageDisplayed(message: String) {
+        onView(withText(message))
             .check(matches(isDisplayed()))
     }
     fun tapOnYes() = tapOn(yesButtonMatcher)

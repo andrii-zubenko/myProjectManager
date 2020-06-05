@@ -25,6 +25,8 @@ class BoardTest : BaseTest() {
     private val newBoardName = "${dateInMills()}_Board"
     private val boardToBeDeleted = "${dateInMills()}_DeleteBoard"
     private val pleaseEnterABoardNameMessage = "Please enter a Board name"
+    private val deleteBoardAlertMessage =
+        "Are you sure you want to delete board '$boardToBeDeleted'?"
 
     @Test
     fun createBoardWithEmptyName() {
@@ -76,7 +78,7 @@ class BoardTest : BaseTest() {
         }
 
         alert {
-            isAlertMessageDisplayed(boardToBeDeleted)
+            isAlertMessageDisplayed(deleteBoardAlertMessage)
             tapOnYes()
         }
 
