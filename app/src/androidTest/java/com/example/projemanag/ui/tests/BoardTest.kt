@@ -61,7 +61,7 @@ class BoardTest : BaseTest() {
     }
 
     @Test
-    fun deleteTestBoard() {
+    fun deleteBoard() {
         var numberOfBoards: Int? = null
         createBoardToBeDeleted(boardToBeDeleted)
         signInWithTestCreds()
