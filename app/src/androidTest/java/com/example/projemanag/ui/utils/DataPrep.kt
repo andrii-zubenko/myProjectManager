@@ -11,7 +11,7 @@ object DataPrep {
     fun createBoardToBeDeleted(name: String) {
         val boardToBeDeleted = Board(
             name = name,
-            assignedTo = arrayListOf("8A7iNZWE3WciRBWqdBizNVprhvD3")
+            assignedTo = arrayListOf(getJsonValue("testUserID"))
         )
         Utils.countingIdlingResource.increment()
         FirebaseFirestore.getInstance().collection(Constants.BOARDS)
