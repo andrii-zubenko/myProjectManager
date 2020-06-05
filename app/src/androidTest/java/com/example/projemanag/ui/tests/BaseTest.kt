@@ -10,8 +10,8 @@ import org.junit.Before
 
 open class BaseTest {
 
-    val testEmail = getJsonValue("email")
-    val testPassword = getJsonValue("password")
+    private val testEmail = getJsonValue("email")
+    private val testPassword = getJsonValue("password")
     val testBoard = "testBoard"
     val testList = "testList"
     val testCard = "testCard"
