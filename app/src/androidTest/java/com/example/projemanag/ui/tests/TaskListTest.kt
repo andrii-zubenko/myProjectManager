@@ -23,7 +23,7 @@ class TaskListTest : BaseTest() {
     private val newListName = "${dateInMills()}_List"
     private val listToBeDeleted = "${dateInMills()}_DeleteList"
     private val deleteTaskListAlertMessage =
-        "Are you sure you want to delete Task List with name:$listToBeDeleted?"
+        "Are you sure you want to delete Task List '$listToBeDeleted'?"
 
     @Test
     fun createTaskList() {
