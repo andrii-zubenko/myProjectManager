@@ -44,7 +44,6 @@ object DataPrep {
                 val testBoard = document.toObject(Board::class.java)!!
                 val currentTaskList = testBoard.taskList
                 currentTaskList.add(0, taskListToBeDeleted)
-                currentTaskList.removeAt(currentTaskList.size - 1)
                 val taskListHashMap = HashMap<String, Any>()
                 taskListHashMap[Constants.TASK_LIST] = currentTaskList
                 Utils.countingIdlingResource.decrement()
