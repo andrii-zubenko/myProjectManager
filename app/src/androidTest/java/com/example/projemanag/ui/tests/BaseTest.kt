@@ -21,7 +21,6 @@ open class BaseTest {
     @Before
     fun setup() {
         IdlingRegistry.getInstance().register(Utils.countingIdlingResource)
-        IdlingPolicies.setIdlingResourceTimeout(60, TimeUnit.SECONDS)
     }
 
     @After
