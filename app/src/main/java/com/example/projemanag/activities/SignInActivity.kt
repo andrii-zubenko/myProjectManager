@@ -59,6 +59,7 @@ class SignInActivity : BaseActivity() {
             Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
             Log.d("Progress Dialog", "signInRegisteredUser")
+            Log.d(TAG, "signInWithEmail:start")
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
