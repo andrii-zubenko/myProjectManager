@@ -3,7 +3,7 @@ package com.example.projemanag.ui.tests
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.example.projemanag.activities.SplashActivity
+import com.example.projemanag.activities.IntroActivity
 import com.example.projemanag.ui.robots.board
 import com.example.projemanag.ui.robots.card
 import com.example.projemanag.ui.robots.dialog
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 class CardTest : BaseTest() {
 
     @get:Rule
-    val activityRule = ActivityTestRule(SplashActivity::class.java)
+    val activityRule = ActivityTestRule(IntroActivity::class.java)
     private val newCardName = "${dateInMills()}_Card"
     private val green = "#43C86F"
     private val blue = "#0C90F1"
