@@ -14,12 +14,13 @@ object DataPrep {
             name = boardName,
             assignedTo = arrayListOf(getJsonValue("testUserID"))
         )
+        Log.d("Data SetUp", "starting data setUp")
         Utils.countingIdlingResource.increment()
         FirebaseFirestore.getInstance().collection(Constants.BOARDS)
             .document()
             .set(boardToBeDeleted, SetOptions.merge())
             .addOnSuccessListener {
-                Log.e("Data SetUp", "Board created successfully")
+                Log.d("Data SetUp", "Board created successfully")
                 Utils.countingIdlingResource.decrement()
             }.addOnFailureListener { exception ->
                 Log.e(
@@ -36,6 +37,7 @@ object DataPrep {
             title = taskListName,
             createdBy = getJsonValue("testUserID")
         )
+        Log.d("Data SetUp", "starting data setUp")
         Utils.countingIdlingResource.increment()
         FirebaseFirestore.getInstance().collection(Constants.BOARDS)
             .document(getJsonValue("testBoardID"))
@@ -52,7 +54,7 @@ object DataPrep {
                     .document(getJsonValue("testBoardID"))
                     .update(taskListHashMap)
                     .addOnSuccessListener {
-                        Log.e("Data SetUp", "TaskList updated successfully.")
+                        Log.d("Data SetUp", "TaskList updated successfully.")
                         Utils.countingIdlingResource.decrement()
                     }.addOnFailureListener { exception ->
                         Log.e("Data SetUp", "Error while creating a board.", exception)
