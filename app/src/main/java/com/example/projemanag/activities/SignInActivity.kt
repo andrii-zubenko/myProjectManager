@@ -61,7 +61,7 @@ class SignInActivity : BaseActivity() {
             Log.d("Progress Dialog", "signInRegisteredUser")
             Log.d(TAG, "signInWithEmail:start")
             auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Utils.countingIdlingResource.decrement()
                         FirestoreClass().loadUserData(this)
