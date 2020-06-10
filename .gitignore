@@ -29,7 +29,8 @@ hs_err_pid*
 /build
 /captures
 .externalNativeBuild
-/.idea
+/.idea/
+.idea/
 © 2020 GitHub, Inc.
 Terms
 Privacy
