@@ -3,7 +3,7 @@ package com.example.projemanag.ui.tests
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.example.projemanag.activities.SplashActivity
+import com.example.projemanag.activities.IntroActivity
 import com.example.projemanag.ui.robots.drawer
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.main
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 class SignUpTest : BaseTest() {
 
     @get:Rule
-    val activityRule = ActivityTestRule(SplashActivity::class.java)
+    val activityRule = ActivityTestRule(IntroActivity::class.java)
     private val invalidName = "invalidName"
     private val validName = "validName"
     private val invalidEmail = "invalidEmail"

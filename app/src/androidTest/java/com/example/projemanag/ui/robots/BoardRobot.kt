@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.example.projemanag.R
 import com.example.projemanag.ui.utils.getColorWithMatcher
+import com.example.projemanag.ui.utils.getNumberOfItemsInRecyclerView
 import org.hamcrest.Matchers.allOf
 
 fun board(func: BoardRobot.() -> Unit) = BoardRobot().apply { func() }
@@ -45,11 +46,13 @@ class BoardRobot : BaseRobot() {
         withId(R.id.et_card_name),
         withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     )
+    private val deleteListButtonMatcher = withId(R.id.ib_delete_list)
     private val listsRecyclerViewMatcher = withId(R.id.rv_task_list)
     private val listNameMatcher = withId(R.id.tv_task_list_title)
     private val cardsRecyclerViewMatcher = withId(R.id.rv_card_list)
     private val cardNameMatcher = withId(R.id.tv_card_name)
     private val cardColorMatcher = withId(R.id.view_label_color)
+    private val deleteBoardButtonMatcher = withId(R.id.action_delete_board)
 
     fun tapAddCard(listName: String) {
         val currentAddCardButtonMatcher = allOf(
@@ -66,6 +69,7 @@ class BoardRobot : BaseRobot() {
         tapRecyclerItem(listsRecyclerViewMatcher, currentAddCardButtonMatcher)
     }
 
+    fun tapOnDeleteBoard() = tapOn(deleteBoardButtonMatcher)
     fun tapOnAddList() = tapRecyclerItem(listsRecyclerViewMatcher, addListButtonMatcher)
     fun typeInListName(listName: String) = typeInText(listNameFieldMatcher, listName)
     fun tapOnListDoneButton() = tapOn(listDoneButtonMatcher)
@@ -140,4 +144,14 @@ class BoardRobot : BaseRobot() {
         scrollToItemInRecyclerView(listsRecyclerViewMatcher, currentCardsRecyclerView)
         tapRecyclerItem(currentCardsRecyclerView, currentCardMatcher)
     }
+
+    fun tapOnDeleteList(listName: String) {
+        val currentListDeleteButtonMatcher = allOf(
+            deleteListButtonMatcher,
+            hasSibling(withText(listName))
+        )
+        tapRecyclerItem(listsRecyclerViewMatcher, currentListDeleteButtonMatcher)
+    }
+
+    fun getNumberOfTaskLists(): Int? = getNumberOfItemsInRecyclerView(listsRecyclerViewMatcher)
 }

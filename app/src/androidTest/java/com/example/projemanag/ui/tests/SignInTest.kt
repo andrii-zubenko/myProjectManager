@@ -3,7 +3,7 @@ package com.example.projemanag.ui.tests
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.example.projemanag.activities.SplashActivity
+import com.example.projemanag.activities.IntroActivity
 import com.example.projemanag.ui.robots.drawer
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.main
@@ -18,11 +18,15 @@ import org.junit.runner.RunWith
 class SignInTest : BaseTest() {
 
     @get:Rule
-    val activityRule = ActivityTestRule(SplashActivity::class.java)
+    val activityRule = ActivityTestRule(IntroActivity::class.java)
+
     private val signInActivityTitle = "SIGN IN"
     private val emptyString = ""
     private val pleaseEnterAnEmailAddress = "Please enter an email address"
     private val userName = "tester"
+    private val authFailedMessage = "Authentication failed."
+    private val invalidEmail = "invalidEmail"
+    private val invalidPassword = "invalidPassword"
 
     @Test
     fun verifySignInActivityTitle() {
@@ -60,6 +64,20 @@ class SignInTest : BaseTest() {
 
         drawer {
             Assert.assertEquals(userName, getUserName())
+        }
+    }
+
+    @Test
+    fun signInWithInValidCreds() {
+        intro {
+            tapOnSignInButton()
+        }
+
+        signIn {
+            typeInEmail(invalidEmail)
+            typeInPassword(invalidPassword)
+            tapOnSignInButton()
+            toastWithTextIsDiplayed(authFailedMessage)
         }
     }
 }

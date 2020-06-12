@@ -3,6 +3,7 @@ package com.example.projemanag.ui.utils
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -37,4 +38,19 @@ fun getColorWithMatcher(matcher: Matcher<View>): Int? {
         }
     })
     return color
+}
+
+fun getNumberOfItemsInRecyclerView(recyclerViewMatcher: Matcher<View>): Int? {
+    var count: Int? = null
+    onView(recyclerViewMatcher).perform(object : ViewAction {
+        override fun getConstraints() = isA(View::class.java)
+
+        override fun getDescription() = "Get count from RecyclerView: $count"
+
+        override fun perform(uiController: UiController, view: View) {
+            view as RecyclerView
+            count = view.adapter?.itemCount
+        }
+    })
+    return count
 }

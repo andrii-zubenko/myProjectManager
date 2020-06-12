@@ -59,12 +59,13 @@ class SignInActivity : BaseActivity() {
             Utils.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
             Log.d("Progress Dialog", "signInRegisteredUser")
+            Log.d(TAG, "signInWithEmail:start")
             auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        FirestoreClass().loadUserData(this)
-                        Log.d(TAG, "signInWithEmail:success")
                         Utils.countingIdlingResource.decrement()
+                        Log.d(TAG, "signInWithEmail:success")
+                        FirestoreClass().loadUserData(this)
                     } else {
                         hideProgressDialog()
                         Log.w(TAG, "signInWithEmail:failure", task.exception)

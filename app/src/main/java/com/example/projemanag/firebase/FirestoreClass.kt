@@ -55,6 +55,31 @@ class FirestoreClass {
             }
     }
 
+    fun deleteBoard(activity: TaskListActivity, board: Board) {
+        Utils.countingIdlingResource.increment()
+        mFireStore.collection(Constants.BOARDS)
+            .document(board.documentID)
+            .delete()
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, "Board deleted successfully")
+                Toast.makeText(
+                    activity,
+                    "Board deleted successfully.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                activity.boardDeletedSuccessfully()
+                Utils.countingIdlingResource.decrement()
+            }.addOnFailureListener { exception ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while deleted a board.",
+                    exception
+                )
+                Utils.countingIdlingResource.decrement()
+            }
+    }
+
     fun createBoard(activity: CreateBoardActivity, board: Board) {
         Utils.countingIdlingResource.increment()
         mFireStore.collection(Constants.BOARDS)
