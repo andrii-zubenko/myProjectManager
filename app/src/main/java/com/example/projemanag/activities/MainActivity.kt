@@ -53,7 +53,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             Log.d("Progress Dialog", "MainActivity/onCreate")
         } else {
             FirebaseInstanceId.getInstance().instanceId
-                .addOnSuccessListener(this) { instanceIdResult ->
+                .addOnSuccessListener(this) { instanceIdResult -> //else TODO
                     updateFCMToken(instanceIdResult.token)
                 }
         }
