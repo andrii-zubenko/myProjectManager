@@ -53,8 +53,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             Log.d("Progress Dialog", "MainActivity/onCreate")
         } else {
             FirebaseInstanceId.getInstance().instanceId
-                .addOnSuccessListener(this) { instanceIdResult -> //else TODO
+                .addOnSuccessListener(this) { instanceIdResult ->
                     updateFCMToken(instanceIdResult.token)
+                }.addOnFailureListener { exception ->
+                    Log.e("FCM Token Update", "Error while creating a board.", exception)
                 }
         }
         FirestoreClass().loadUserData(this, true)
