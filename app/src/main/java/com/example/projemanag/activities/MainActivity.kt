@@ -19,7 +19,7 @@ import com.example.projemanag.models.User
 import com.example.projemanag.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.activity_main.nav_view
 import kotlinx.android.synthetic.main.app_bar_main.fab_create_board
@@ -52,9 +52,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             showProgressDialog(resources.getString(R.string.please_wait))
             Log.d("Progress Dialog", "MainActivity/onCreate")
         } else {
-            FirebaseInstanceId.getInstance().instanceId
-                .addOnSuccessListener(this) { instanceIdResult ->
-                    updateFCMToken(instanceIdResult.token)
+            FirebaseMessaging.getInstance().token
+                .addOnSuccessListener(this) { result ->
+                    updateFCMToken(result)
                 }.addOnFailureListener { exception ->
                     Log.e("FCM Token Update", "Error while creating a board.", exception)
                 }

@@ -80,9 +80,4 @@ class SignInTest : BaseTest() {
             toastWithTextIsDiplayed(authFailedMessage)
         }
     }
-
-    @Test
-    fun newTest() {
-        // TODO
-    }
 }
