@@ -68,7 +68,7 @@ class SignInTest : BaseTest() {
     }
 
     @Test
-    fun signInWithInValidCreds() {
+    fun signInWithInvalidCreds() {
         intro {
             tapOnSignInButton()
         }
@@ -78,6 +78,20 @@ class SignInTest : BaseTest() {
             typeInPassword(invalidPassword)
             tapOnSignInButton()
             toastWithTextIsDiplayed(authFailedMessage)
+        }
+    }
+
+    @Test
+    fun signInTestThatShouldFail() {
+        intro {
+            tapOnSignInButton()
+        }
+
+        signIn {
+            typeInEmail(invalidEmail)
+            typeInPassword(invalidPassword)
+            tapOnSignInButton()
+            toastWithTextIsDiplayed("Some text that does not exist")
         }
     }
 }
