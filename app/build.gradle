@@ -12,7 +12,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.shazam.fork:fork-gradle-plugin:3.13.0'
+        classpath 'com.shazam.fork:fork-gradle-plugin:3.15.0'
     }
 }
 
@@ -69,7 +69,7 @@ dependencies {
 
 fork {
     title = "ProjeManage Regression"
-    testPackage = "com.example.projemanag.ui.tests"
+    testPackage = "com.example.projemanag.ui.tests.signin"
     totalAllowedRetryQuota = 5
     retryPerTestCaseQuota = 2
 
