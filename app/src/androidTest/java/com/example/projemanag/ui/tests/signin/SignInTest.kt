@@ -1,4 +1,4 @@
-package com.example.projemanag.ui.tests
+package com.example.projemanag.ui.tests.signin
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -8,6 +8,7 @@ import com.example.projemanag.ui.robots.drawer
 import com.example.projemanag.ui.robots.intro
 import com.example.projemanag.ui.robots.main
 import com.example.projemanag.ui.robots.signIn
+import com.example.projemanag.ui.tests.BaseTest
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
